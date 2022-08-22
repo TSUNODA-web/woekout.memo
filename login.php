@@ -10,7 +10,9 @@
 
 <body>
   <header>
-    <h1><a href="">筋トレメモ</a></h1>
+    <div class="hedader">
+      <h1><a href="">筋トレメモ</a></h1>
+    </div>
   </header>
   <div class="form">
     <div class="form_title">ログインフォーム</div>
