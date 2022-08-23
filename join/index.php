@@ -20,17 +20,23 @@
       <div class="form-list">
         <label>名前を入力してください</label>
         <input name="name" type="text" value="">
+      </div>
+      <div class="form-list">
         <label>メールアドレスを入力してください</label>
         <input name="email" type="email" value="">
+      </div>
+      <div class="form-list">
         <label>パスワードを入力してください</label>
         <input name="password" type="password" value="">
+      </div>
+      <div class="form-list">
         <label>パスワードを再入力してください</label>
         <input name="password" type="password" value="">
-      </div class="btn-area">
-      <input type="submit" name="" value="入力内容確認">
-  </div>
-  </div>
-  </form>
+      </div>
+      <div class="btn-area">
+        <input type="submit" name="" value="入力内容確認">
+      </div>
+    </form>
   </div>
 </body>
 

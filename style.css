@@ -17,6 +17,7 @@ a {
 .form-title {
   text-align: center;
   font-size: 20px;
+  margin: 20px;
 }
 
 .form-content {
@@ -52,8 +53,11 @@ input[type="password"] {
   font-size: 15px;
 }
 
-input[type="submit"] {
+.btn-area {
   text-align: center;
+}
+
+input[type="submit"] {
   background: #e0505c;
   border: none;
   color: white;
