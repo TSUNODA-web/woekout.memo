@@ -29,7 +29,7 @@
         <label>パスワードは表示されません</label>
       </div>
       <div class="btn-area">
-        <a href="">書き直す</a>
+        <a href="index.php?action=rewrite" class="button">書き直す</a>
         <input type="submit" value="登録する" />
       </div>
     </form>

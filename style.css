@@ -57,6 +57,18 @@ input[type="password"] {
   text-align: center;
 }
 
+.button {
+  background: #e0505c;
+  border: none;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin: 100px;
+
+}
+
+
 input[type="submit"] {
   background: #e0505c;
   border: none;
