@@ -89,3 +89,13 @@ p {
 .content {
   text-align: center;
 }
+
+.nav-list {
+  list-style-type: none;
+  text-align: right;
+}
+
+.nav-list-item {
+  display: inline-block;
+  margin-left: 10px;
+}

@@ -23,19 +23,24 @@
       </li>
     </ul>
   </header>
-  <div class="form">
-    <div class="form_title">登録情報</div>
-    <div class="form_content">
-      <form action="" method="post">
-        <div class="form_list">
-          <label>お名前</label>
-          <!-- <p>データベースから名前を取得</p> -->
-          <label>メールアドレス</label>
-          <!-- <p>データベースからアドレスを取得</p> -->
-          <label>パスワードは表示されません</label>
-          <input type="submit" value="変更する" />
-        </div>
-    </div>
+  <p class="form-title">登録情報</p>
+  <div class="form-content">
+    <form action="" method="post">
+      <div class="form-list">
+        <label>お名前</label>
+        <input name="name" type="text" value="">
+      </div>
+      <div class="form-list">
+        <label>メールアドレス</label>
+        <input name="email" type="email" value="">
+      </div>
+      <div class="form-list">
+        <label>パスワードは表示されません</label>
+        <input name="password" type="password" value="">
+      </div>
+      <div class="btn-area">
+        <input type="submit" name="" value="編集する">
+      </div>
     </form>
   </div>
 </body>
