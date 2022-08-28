@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="reset.css" />
   <link rel="stylesheet" href="style.css" />
 
-  <title>削除</title>
+  <title>一覧</title>
 </head>
 
 <body>
@@ -23,11 +23,7 @@
       </li>
     </ul>
   </header>
-  <div class="content">
-    <h1>削除しました</h1>
-    <a href="index.php" class="button">戻る</a>
 
-  </div>
 </body>
 
 </html>

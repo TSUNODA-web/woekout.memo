@@ -13,7 +13,8 @@
 
 <body>
   <header>
-    <h1><a href="">筋トレメモ</a></h1>
+    <h1 class="headline"><a href="">筋トレメモ</a>
+    </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
         <a href="mypage.php">ログイン中のユーザー名</a>
