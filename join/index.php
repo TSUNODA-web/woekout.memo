@@ -1,3 +1,11 @@
+<?php
+$form = [];
+$error = [];
+$form['name'] = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+if ($form['name'] === '') {
+  $error['name'] = 'blank';
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -20,6 +28,10 @@
       <div class="form-list">
         <label>名前を入力してください</label>
         <input name="name" type="text" value="">
+        <?php if (isset($error['name']) && $error['name'] === 'blank') :  ?>
+
+          <p class="error">＊名前を入力してください</p>
+        <?php endif; ?>
       </div>
       <div class="form-list">
         <label>メールアドレスを入力してください</label>
