@@ -1,9 +1,16 @@
 <?php
-$form = [];
+require('../library.php');
+
+$form = [
+  'name' => ''
+];
 $error = [];
-$form['name'] = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-if ($form['name'] === '') {
-  $error['name'] = 'blank';
+/*フォームの内容をチェック*/
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $form['name'] = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+  if ($form['name'] === '') {
+    $error['name'] = 'blank';
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -26,29 +33,29 @@ if ($form['name'] === '') {
   <div class="form-content">
     <form action="" method="post">
       <div class="form-list">
-        <label>名前を入力してください</label>
-        <input name="name" type="text" value="">
+        <label>お名前</label>
+        <input name="name" type="text" value="<?php echo h($form['name']); ?>">
         <?php if (isset($error['name']) && $error['name'] === 'blank') :  ?>
-
           <p class="error">＊名前を入力してください</p>
         <?php endif; ?>
       </div>
       <div class="form-list">
-        <label>メールアドレスを入力してください</label>
+        <label>メールアドレス</label>
         <input name="email" type="email" value="">
+        <p class="error">＊メールアドレスを入力してください</p>
+        <p class="error">＊指定されたメールアドレスはすでに登録されています</p>
       </div>
       <div class="form-list">
-        <label>パスワードを入力してください</label>
+        <label>パスワード</label>
         <input name="password" type="password" value="">
+        <p class="error">＊パスワードを入力してください</p>
+        <p class="error">＊パスワードは8文字以上で入力してください</p>
+        <div class="btn-area">
+          <input type="submit" name="" value="入力内容確認">
+        </div>
       </div>
-      <div class="form-list">
-        <label>パスワードを再入力してください</label>
-        <input name="password" type="password" value="">
-      </div>
-      <div class="btn-area">
-        <input type="submit" name="" value="入力内容確認">
-      </div>
-    </form>
+  </div>
+  </form>
   </div>
 </body>
 
