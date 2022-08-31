@@ -2,7 +2,9 @@
 require('../library.php');
 
 $form = [
-  'name' => ''
+  'name' => '',
+  'email' => '',
+  'password' => '',
 ];
 $error = [];
 /*フォームの内容をチェック*/
@@ -11,7 +13,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($form['name'] === '') {
     $error['name'] = 'blank';
   }
+
+  $form['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+  if ($form['email'] === '') {
+    $error['email'] = 'blank';
+  }
+
+  $form['password'] = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+  if ($form['password'] === '') {
+    $error['password'] = 'blank';
+  } elseif (strlen($form['password']) < 8) {
+    $error['password'] = 'length';
+  }
 }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -41,15 +57,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
       <div class="form-list">
         <label>メールアドレス</label>
-        <input name="email" type="email" value="">
-        <p class="error">＊メールアドレスを入力してください</p>
+        <input name="email" type="email" value="<?php echo h($form['email']); ?>">
+        <?php if (isset($error['email']) && $error['email'] === 'blank') : ?>
+          <p class="error">＊メールアドレスを入力してください</p>
+        <?php endif; ?>
         <p class="error">＊指定されたメールアドレスはすでに登録されています</p>
       </div>
       <div class="form-list">
         <label>パスワード</label>
-        <input name="password" type="password" value="">
-        <p class="error">＊パスワードを入力してください</p>
-        <p class="error">＊パスワードは8文字以上で入力してください</p>
+        <input name="password" type="password" value="<?php echo h($form['password']); ?>">
+        <?php if (isset($error['password']) && $error['password'] === 'blank') : ?>
+          <p class="error">＊パスワードを入力してください</p>
+        <?php endif; ?>
+        <?php if (isset($error['password']) && $error['password'] === 'length') : ?>
+          <p class="error">＊パスワードは8文字以上で入力してください</p>
+        <?php endif; ?>
+
         <div class="btn-area">
           <input type="submit" name="" value="入力内容確認">
         </div>
