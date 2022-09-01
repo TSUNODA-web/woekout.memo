@@ -16,7 +16,7 @@
     <h1><a href="">筋トレメモ</a></h1>
   </header>
   <div class="form-title">会員登録フォーム</div>
-  <p>登録が完了しました</p>
+  <p class="thanks">登録が完了しました</p>
   <div class="content">
     <a href="../login.php" class="button">ログイン</a>
   </div>

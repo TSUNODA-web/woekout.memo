@@ -102,3 +102,11 @@ input[type="submit"] {
   color: #BB1850;
   margin-left: 50px;
 }
+
+.check-list {
+  padding: 10px;
+}
+
+.thanks {
+  text-align: center;
+}

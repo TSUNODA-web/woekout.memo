@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('../library.php');
 
 $form = [
@@ -24,6 +25,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error['password'] = 'blank';
   } elseif (strlen($form['password']) < 8) {
     $error['password'] = 'length';
+  }
+
+  if (empty($error)) {
+    $_SESSION['form'] = $form;
+    header('Location: check.php');
+    exit();
   }
 }
 

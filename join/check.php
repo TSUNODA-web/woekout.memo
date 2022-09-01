@@ -1,3 +1,36 @@
+<?php
+session_start();
+require('../library.php');
+
+if (isset($_SESSION['form'])) {
+  $form = $_SESSION['form'];
+} else {
+  header('Location:index.php');
+  exit();
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $db = new mysqli('localhost', 'root', 'root', 'workout_memo');
+  if (!$db) {
+    die($db->error);
+  }
+  $stmt = $db->prepare('insert into members(name,email,password) VALUES(?,?,?)');
+  if (!$stmt) {
+    die($db->error);
+  }
+  $password = password_hash($form['password'], PASSWORD_DEFAULT);
+  $stmt->bind_param('sss', $form['name'], $form['email'], $password);
+  $success = $stmt->execute();
+  if (!$success) {
+    die($db->error);
+  }
+
+  unset($_SESSION['form']);
+  header('Location:thanks.php');
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -19,14 +52,16 @@
     <form action="" method="post">
       <div class="form-list">
         <label>お名前</label>
-        <!-- <p>データベースから名前を取得</p> -->
+        <p class="check-list"><?php echo h($form['name']); ?></p>
       </div>
       <div class="form-list">
         <label>メールアドレス</label>
-        <!-- <p>データベースからアドレスを取得</p> -->
+        <p class="check-list"><?php echo h($form['email']); ?></p>
+
       </div>
       <div class="form-list">
-        <label>パスワードは表示されません</label>
+        <label>パスワード</label>
+        <p class="check-list">【表示されません】</p>
       </div>
       <div class="btn-area">
         <a href="index.php?action=rewrite" class="button">書き直す</a>
