@@ -10,10 +10,7 @@ if (isset($_SESSION['form'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $db = new mysqli('localhost', 'root', 'root', 'workout_memo');
-  if (!$db) {
-    die($db->error);
-  }
+  $db = dbconnect();
   $stmt = $db->prepare('insert into members(name,email,password) VALUES(?,?,?)');
   if (!$stmt) {
     die($db->error);

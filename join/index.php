@@ -2,11 +2,17 @@
 session_start();
 require('../library.php');
 
-$form = [
-  'name' => '',
-  'email' => '',
-  'password' => '',
-];
+if (isset($_GET['action']) && $_GET['action'] === 'rewrite' && isset($_SESSION['form'])) {
+  $form = $_SESSION['form'];
+} else {
+  $form = [
+    'name' => '',
+    'email' => '',
+    'password' => ''
+  ];
+}
+
+
 $error = [];
 /*フォームの内容をチェック*/
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -18,6 +24,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $form['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
   if ($form['email'] === '') {
     $error['email'] = 'blank';
+  } else {
+    $db = dbconnect();
+    $stmt = $db->prepare('select count(*) from members where email=? ');
+    if (!$stmt) {
+      die($db->error);
+    }
+    $stmt->bind_param('s', $form['email']);
+    $success = $stmt->execute();
+    if (!$success) {
+      die($db->error);
+    }
+
+    $stmt->bind_result($cnt);
+    $stmt->fetch();
+
+    if ($cnt > 0) {
+      $error['email'] = 'duplicate';
+    }
   }
 
   $form['password'] = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
@@ -68,7 +92,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (isset($error['email']) && $error['email'] === 'blank') : ?>
           <p class="error">＊メールアドレスを入力してください</p>
         <?php endif; ?>
-        <p class="error">＊指定されたメールアドレスはすでに登録されています</p>
+        <?php if (isset($error['email']) && $error['email'] === 'duplicate') : ?>
+          <p class="error">＊指定されたメールアドレスはすでに登録されています</p>
+        <?php endif; ?>
       </div>
       <div class="form-list">
         <label>パスワード</label>
