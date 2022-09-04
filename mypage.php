@@ -1,3 +1,27 @@
+<?php
+session_start();
+require('library.php');
+if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
+  $id = $_SESSION['id'];
+  $name = $_SESSION['name'];
+  $email = $_SESSION['email'];
+} else {
+  header('Location: login.php');
+  exit();
+}
+
+$db = dbconnect();
+
+$stmt = $db->prepare('SELECT id,name,email FROM members');
+if (!$stmt) {
+  die($db->error);
+}
+
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -17,7 +41,7 @@
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
-        <a href="mypage.php">ログイン中のユーザー名</a>
+        <a href="mypage.php"><?php echo h($name); ?></a></a>
       </li>
       <li class="nav-list-item">
         <a href="logout.php">ログアウト</a>
@@ -29,11 +53,11 @@
     <form action="" method="post">
       <div class="form-list">
         <label>お名前</label>
-        <input name="name" type="text" value="">
+        <input name="name" type="text" value="<?php echo h($name); ?>">
       </div>
       <div class="form-list">
         <label>メールアドレス</label>
-        <input name="email" type="email" value="">
+        <input name="email" type="email" value="<?php echo h($email); ?>">
       </div>
       <div class="form-list">
         <label>パスワードは表示されません</label>

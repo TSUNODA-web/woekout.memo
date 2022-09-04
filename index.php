@@ -1,3 +1,20 @@
+<?php
+session_start();
+require('library.php');
+
+if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
+  $id = $_SESSION['id'];
+  $name = $_SESSION['name'];
+} else {
+  header('Location: login.php');
+  exit();
+}
+
+$db = dbconnect();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -16,7 +33,7 @@
     <h1><a href="">筋トレメモ</a></h1>
     <ul class="nav-list">
       <li class="nav-list-item">
-        <a href="mypage.php">ログイン中のユーザー名</a>
+        <a href="mypage.php"><?php echo h($name); ?>様</a>
       </li>
       <li class="nav-list-item">
         <a href="logout.php">ログアウト</a>
