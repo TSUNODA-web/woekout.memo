@@ -12,11 +12,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
 
 $db = dbconnect();
 
-$stmt = $db->prepare('SELECT id,name,email FROM members');
-if (!$stmt) {
-  die($db->error);
-}
-
 
 
 
@@ -41,7 +36,7 @@ if (!$stmt) {
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
-        <a href="mypage.php"><?php echo h($name); ?></a></a>
+        <a href="mypage.php"><?php echo h($name); ?>様</a></a>
       </li>
       <li class="nav-list-item">
         <a href="logout.php">ログアウト</a>
