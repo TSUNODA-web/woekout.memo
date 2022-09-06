@@ -1,7 +1,7 @@
 <?php
 session_start();
 require('library.php');
-if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
+/*if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $id = $_SESSION['id'];
   $name = $_SESSION['name'];
   $email = $_SESSION['email'];
@@ -15,11 +15,27 @@ if (!$id) {
   header('Location: index.php');
   exit();
 }
+*/
+$id = $_GET['id'];
+$name = $_SESSION['name'];
+$email = $_SESSION['email'];
+$db = dbconnect();
 
-
-
-
-
+try {
+  $sql = "SELECT * FROM members WHERE id =? ";
+  $stmt = $db->prepare($sql);
+  $stmt->bind_param('s', $id);
+  $stmt->execute();
+} catch (PDOException $e) {
+  echo $e->getMessage();
+  die();
+}
+$stmt->execute();
+$data = $stmt->fetch();
+if (empty($data)) {
+  header("Location: login.php");
+  exit;
+}
 
 
 ?>
@@ -42,7 +58,7 @@ if (!$id) {
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
-        <a href=" mypage.php?id=<?php echo h($id); ?>"><?php echo h($name); ?>様</a>
+        <a href=" mypage.php?id=<?php echo ($id); ?>"><?php echo ($name); ?>様</a>
       </li>
       <li class="nav-list-item">
         <a href="logout.php">ログアウト</a>
@@ -51,7 +67,7 @@ if (!$id) {
   </header>
   <p class="form-title">登録情報</p>
   <div class="form-content">
-    <form action="" method="post">
+    <form action="members_update.php" method="post">
       <div class="form-list">
         <label>お名前</label>
         <input name="name" type="text" value="<?php echo h($name); ?>">

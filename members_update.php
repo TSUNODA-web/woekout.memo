@@ -1,22 +1,26 @@
 <?php
-session_start();
 require('library.php');
-if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
+/*if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
+  $id = $_POST['id'];
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+} else {
   header('Location: login.php');
   exit();
-}
+}*/
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect();
+  $id = $_POST['id'];
+  $name = $_POST['name'];
+  $email = $_POST['email'];
 
-
-
-
-  $stmt = $db->prepare('UPDATE members SET name = :name, email = :email WHERE members id = :id');
+  $stmt = $db->prepare("update `members` SET `name`= :name,`email`= :email where id = :id");
   if (!$stmt) {
     die($db->error);
   }
-  $success = $stmt->execute(array(':name' => $_POST['name'], ':email' => $_POST['email'],));
+  $stmt->bind_param('ss', $name, $email);
+  $success = $stmt->execute();
   if (!$success) {
     die($db->error);
   }
@@ -36,16 +40,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-  <h1 class="headline"><a href="">筋トレメモ</a>
-  </h1>
-  <ul class="nav-list">
-    <li class="nav-list-item">
-      <a href=" mypage.php?id=<?php echo h($id); ?>"><?php echo h($name); ?>様</a>
-    </li>
-    <li class="nav-list-item">
-      <a href="logout.php">ログアウト</a>
-    </li>
-  </ul>
+  <header>
+    <h1 class="headline"><a href="">筋トレメモ</a>
+    </h1>
+    <ul class="nav-list">
+      <li class="nav-list-item">
+        <a href=" mypage.php?id=<?php echo h($id); ?>"><?php echo h($name); ?>様</a>
+      </li>
+      <li class="nav-list-item">
+        <a href="logout.php">ログアウト</a>
+      </li>
+    </ul>
   </header>
   <div class="form-title">フォーム</div>
   <p class="thanks">更新が完了しました</p>
