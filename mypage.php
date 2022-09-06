@@ -10,7 +10,13 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 
-$db = dbconnect();
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+if (!$id) {
+  header('Location: index.php');
+  exit();
+}
+
+
 
 
 
@@ -36,7 +42,7 @@ $db = dbconnect();
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
-        <a href="mypage.php"><?php echo h($name); ?>様</a></a>
+        <a href=" mypage.php?id=<?php echo h($id); ?>"><?php echo h($name); ?>様</a>
       </li>
       <li class="nav-list-item">
         <a href="logout.php">ログアウト</a>
@@ -56,10 +62,12 @@ $db = dbconnect();
       </div>
       <div class="form-list">
         <label>パスワードは表示されません</label>
-        <input name="password" type="password" value="">
+      </div>
+      <div>
+        <input type="hidden" name="id" value="<?php echo $id; ?>">
       </div>
       <div class="btn-area">
-        <input type="submit" name="" value="編集する">
+        <input type="submit" name="" value="更新する">
       </div>
     </form>
   </div>

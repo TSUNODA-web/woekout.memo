@@ -33,7 +33,7 @@ $db = dbconnect();
     <h1><a href="">筋トレメモ</a></h1>
     <ul class="nav-list">
       <li class="nav-list-item">
-        <a href="mypage.php"><?php echo h($name); ?>様</a>
+        <a href="mypage.php?id=<?php echo h($id); ?>">マイページ</a>
       </li>
       <li class="nav-list-item">
         <a href="logout.php">ログアウト</a>
