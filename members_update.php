@@ -1,21 +1,22 @@
 <?php
+session_start();
 require('library.php');
-/*if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
+if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $id = $_POST['id'];
   $name = $_POST['name'];
   $email = $_POST['email'];
 } else {
   header('Location: login.php');
   exit();
-}*/
+}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+/*if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect();
   $id = $_POST['id'];
   $name = $_POST['name'];
   $email = $_POST['email'];
 
-  $stmt = $db->prepare("update `members` SET `name`= :name,`email`= :email where id = :id");
+  /*$stmt = $db->prepare("update `members` set `name`= :name,`email`= :email where id = :id");
   if (!$stmt) {
     die($db->error);
   }
@@ -24,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!$success) {
     die($db->error);
   }
-}
+}*/
 ?>
 
 <!DOCTYPE html>

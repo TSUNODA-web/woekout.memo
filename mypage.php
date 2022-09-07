@@ -1,7 +1,7 @@
 <?php
 session_start();
 require('library.php');
-/*if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
+if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $id = $_SESSION['id'];
   $name = $_SESSION['name'];
   $email = $_SESSION['email'];
@@ -15,27 +15,9 @@ if (!$id) {
   header('Location: index.php');
   exit();
 }
-*/
-$id = $_GET['id'];
-$name = $_SESSION['name'];
-$email = $_SESSION['email'];
+
 $db = dbconnect();
 
-try {
-  $sql = "SELECT * FROM members WHERE id =? ";
-  $stmt = $db->prepare($sql);
-  $stmt->bind_param('s', $id);
-  $stmt->execute();
-} catch (PDOException $e) {
-  echo $e->getMessage();
-  die();
-}
-$stmt->execute();
-$data = $stmt->fetch();
-if (empty($data)) {
-  header("Location: login.php");
-  exit;
-}
 
 
 ?>
@@ -76,9 +58,6 @@ if (empty($data)) {
         <label>メールアドレス</label>
         <input name="email" type="email" value="<?php echo h($email); ?>">
       </div>
-      <div class="form-list">
-        <label>パスワードは表示されません</label>
-      </div>
       <div>
         <input type="hidden" name="id" value="<?php echo $id; ?>">
       </div>
@@ -86,6 +65,7 @@ if (empty($data)) {
         <input type="submit" name="" value="更新する">
       </div>
     </form>
+    <button onclick="location.href='./view/password_reset.php?id=<?php echo ($id); ?>'">パスワードの変更はこちら</button>
   </div>
 </body>
 
