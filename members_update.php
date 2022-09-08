@@ -10,22 +10,26 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 
-/*if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $db = dbconnect();
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $id = $_POST['id'];
   $name = $_POST['name'];
   $email = $_POST['email'];
 
-  /*$stmt = $db->prepare("update `members` set `name`= :name,`email`= :email where id = :id");
-  if (!$stmt) {
-    die($db->error);
+  $db = dbconnect();
+  try {
+    $db->begin_transaction();
+    $stmt = $db->prepare("UPDATE members SET `name` = :`name`, email = :email WHERE id = :id");
+    if ($stmt === false) {
+      die($db->error);
+    }
+    $stmt->execute(array(':name' => $_POST['name'], ':email' => $_POST['email'], ':id' => $_POST['id']));
+  } catch (PDOException $e) {
+    echo $e->getMessage();
+    die();
   }
-  $stmt->bind_param('ss', $name, $email);
-  $success = $stmt->execute();
-  if (!$success) {
-    die($db->error);
-  }
-}*/
+}
+
+
 ?>
 
 <!DOCTYPE html>
