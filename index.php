@@ -40,6 +40,61 @@ $db = dbconnect();
       </li>
     </ul>
   </header>
+  <div id="cards">
+    <div class="card">
+      <div class="picture"><img src="" alt="" /></div>
+      <div class="description">
+        <p>
+          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
+        </p>
+      </div>
+    </div>
+    <div class="card" id="card-center">
+      <div class="picture"><img src="image2.jpg" alt="" /></div>
+      <div class="description">
+        <p>
+          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="picture"><img src="image3.jpg" alt="" /></div>
+      <div class="description">
+        <p>
+          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
+        </p>
+      </div>
+    </div>
+  </div>
+  <div id="cards">
+    <div class="card">
+      <div class="picture"><img src="" alt="" /></div>
+      <div class="description">
+        <p>
+          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
+        </p>
+      </div>
+    </div>
+    <div class="card" id="card-center">
+      <div class="picture"><img src="image2.jpg" alt="" /></div>
+      <div class="description">
+        <p>
+          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
+        </p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="picture"><img src="image3.jpg" alt="" /></div>
+      <div class="description">
+        <p>
+          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+
 
 </body>
 
