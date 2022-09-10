@@ -93,6 +93,8 @@ $db = dbconnect();
     </div>
   </div>
 
+  <a href="memo/post.php?id=<?php echo h($id); ?>" class="button">メモする</a>
+
 
 
 

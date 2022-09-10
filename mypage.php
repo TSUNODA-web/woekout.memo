@@ -36,7 +36,7 @@ $db = dbconnect();
 
 <body>
   <header>
-    <h1 class="headline"><a href="">筋トレメモ</a>
+    <h1 class="headline"><a href="index.php?id=<?php echo h($id); ?>">筋トレメモ</a>
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">

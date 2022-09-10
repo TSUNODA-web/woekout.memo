@@ -152,3 +152,19 @@ button {
   font-size: 13px;
   color: dimgray;
 }
+
+input[type="number"] {
+  margin-top: 6px;
+}
+
+select {
+  margin-top: 6px;
+}
+
+textarea {
+  margin-left: 100px;
+}
+
+input[type="file"] {
+  padding: 10px;
+}
