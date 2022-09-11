@@ -14,8 +14,46 @@ if (!$id) {
   exit();
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $form['weight'] = filter_input(INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_INT);
+  if ($form['weight'] === '') {
+    $error['weight'] = 'blank';
+  }
+  $form['part'] = filter_input(INPUT_POST, 'part');
+  if ($form['part'] === '') {
+    $error['part'] = 'blank';
+  }
+  $form['part'] = filter_input(INPUT_POST, 'memo');
+  if ($form['part'] === '') {
+    $error['part'] = 'blank';
+  }
 
+  /*$image = $_FILES['image'];
+  if ($image['name'] !== '' && $image['error'] === 0) {
+    $type = mime_content_type($image['tmp_name']);
+    if ($type !== 'image/png' && $type !== 'image/jpeg') {
+      $error['image'] = 'type';
+    }
+  }*/
 
+  if (empty($error)) {
+    $_SESSION['form'] = $form;
+
+    //画像のアップロード
+    /*if ($image['name'] !== '') {
+      $filename = date('YmdHis') . '_' . $image['name'];
+      if (!move_uploaded_file($image['tmp_name'], '../member_picture/' . $filename)) {
+        die('失敗しました');
+      }
+      $_SESSION['form']['image'] = $filename;
+    } else {
+      $_SESSION['form']['image'] = '';
+    }*/
+
+    header('location: post_done.php');
+    exit();
+  }
+}
 ?>
 
 
@@ -52,7 +90,9 @@ if (!$id) {
         <label>体重</label>
         <input name="weight" type="number" max="100" min="0" step="0.1">
       </div>
-      <p class="error">＊ニックネームを入力してください</p>
+      <?php if (isset($error['weight']) && $error['weight'] === 'blank') :  ?>
+        <p class="error">＊選択してください</p>
+      <?php endif; ?>
       <div class="form-list">
         <label>部位</label>
         <select name="part">
@@ -64,23 +104,26 @@ if (!$id) {
           <option value="足">足</option>
         </select>
       </div>
-      <p class="error">＊部位を選択してください</p>
+      <?php if (isset($error['part']) && $error['part'] === 'blank') :  ?>
+        <p class="error">＊選択してください</p>
+      <?php endif; ?>
       <div class="form-list">
         <label>メモ</label>
         <textarea name="memo" cols="50" rows="5"></textarea>
       </div>
-      <p class="error">＊メモを入力してください</p>
+      <?php if (isset($error['memo']) && $error['memo'] === 'blank') : ?>
+        <p class="error">＊入力してください</p>
+      <?php endif; ?>
       <div class="form-list">
         <label>写真</label>
         <input type="file" name="image" size="35" value="">
       </div>
       <p class="error">＊写真などは「.png」または「.jpg」の画像を指定してください</p>
-
-
       <div class="btn-area">
         <input type="submit" name="" value="メモする">
-
       </div>
+    </form>
+  </div>
 
 
 </body>
