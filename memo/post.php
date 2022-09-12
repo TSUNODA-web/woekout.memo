@@ -27,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($form['memo'] === '') {
     $error['memo'] = 'blank';
   }
+  $form['member_id'] = filter_input(INPUT_POST, 'member_id');
 
   /*$image = $_FILES['image'];
   if ($image['name'] !== '' && $image['error'] === 0) {
@@ -119,6 +120,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="file" name="image" size="35" value="">
       </div>
       <p class="error">＊写真などは「.png」または「.jpg」の画像を指定してください</p>
+      <div>
+        <input type="text" name="member_id" value="<?php echo $id; ?>">
+      </div>
+
       <div class="btn-area">
         <input type="submit" name="" value="メモする">
       </div>

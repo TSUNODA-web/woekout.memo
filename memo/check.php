@@ -19,12 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     die($db->error);
   }
 
-  $stmt->bind_param('iss', $form['weight'], $form['part'], $form['memo']);
+  $stmt->bind_param('iiss', $form['member_id'], $form['weight'], $form['part'], $form['memo']);
   $success = $stmt->execute();
   if (!$success) {
     die($db->error);
   }
-  header('Location:index.php');
+  header('Location:thanks.php');
 }
 ?>
 <!DOCTYPE html>
@@ -70,9 +70,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>メモ</label>
         <p class="check-list"><?php echo h($form['memo']); ?></p>
       </div>
+      <div class="form-list">
+        <label>メモ</label>
+        <p class="check-list"><?php echo h($form['member_id']); ?></p>
+      </div>
+
       <div class="btn-area">
         <a href="post.php?action=rewrite" class="button">書き直す</a>
-        <input type="submit" value="登録する" />
+        <input type="submit" value="メモする" />
       </div>
     </form>
   </div>
