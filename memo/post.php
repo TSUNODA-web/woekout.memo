@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('../library.php');
+require('/Applications/MAMP/htdocs/workout.memo/library.php');
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $id = $_SESSION['id'];
 } else {
@@ -23,9 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($form['part'] === '') {
     $error['part'] = 'blank';
   }
-  $form['part'] = filter_input(INPUT_POST, 'memo');
-  if ($form['part'] === '') {
-    $error['part'] = 'blank';
+  $form['memo'] = filter_input(INPUT_POST, 'memo');
+  if ($form['memo'] === '') {
+    $error['memo'] = 'blank';
   }
 
   /*$image = $_FILES['image'];
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $_SESSION['form']['image'] = '';
     }*/
 
-    header('location: post_done.php');
+    header('location: check.php');
     exit();
   }
 }

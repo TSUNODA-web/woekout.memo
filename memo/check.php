@@ -1,10 +1,10 @@
 <?php
 session_start();
-require('library.php');
+require('/Applications/MAMP/htdocs/workout.memo/library.php');
 
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $id = $_SESSION['id'];
-  $form = $_POST['form'];
+  $form = $_SESSION['form'];
 } else {
   header('Location: login.php');
   exit();
@@ -14,7 +14,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect();
   $db->begin_transaction();
-  $stmt = $db->prepare('insert into posts(member_id,weight,part,memo) VALUES(?,?,?,?)');
+  $stmt = $db->prepare('insert into memos(member_id,weight,part,memo) VALUES(?,?,?,?)');
   if (!$stmt) {
     die($db->error);
   }
@@ -24,6 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!$success) {
     die($db->error);
   }
+  header('Location:index.php');
 }
 ?>
 <!DOCTYPE html>
@@ -46,14 +47,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
-        <a href=" mypage.php?id=<?php echo h($id); ?>"><?php echo h($name); ?>様</a>
+        <a href=" mypage.php?id=<?php echo h($id); ?>">マイページ</a>
       </li>
       <li class="nav-list-item">
         <a href="logout.php">ログアウト</a>
       </li>
     </ul>
   </header>
+  <div class="form-title">メモ確認</div>
+  <div class="form-content">
+    <form action="" method="post">
+      <div class="form-list">
+        <label>体重</label>
+        <p class="check-list"><?php echo h($form['weight']); ?></p>
+      </div>
+      <div class="form-list">
+        <label>部位</label>
+        <p class="check-list"><?php echo h($form['part']); ?></p>
 
+      </div>
+      <div class="form-list">
+        <label>メモ</label>
+        <p class="check-list"><?php echo h($form['memo']); ?></p>
+      </div>
+      <div class="btn-area">
+        <a href="post.php?action=rewrite" class="button">書き直す</a>
+        <input type="submit" value="登録する" />
+      </div>
+    </form>
+  </div>
 
 </body>
 
