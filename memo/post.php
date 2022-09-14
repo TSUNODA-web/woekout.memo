@@ -29,27 +29,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
   $form['member_id'] = filter_input(INPUT_POST, 'member_id');
 
-  /*$image = $_FILES['image'];
-  if ($image['name'] !== '' && $image['error'] === 0) {
-    $type = mime_content_type($image['tmp_name']);
+  $form = $_FILES['image'];
+  if ($foem['name'] !== '' && $form['error'] === 0) {
+    $type = mime_content_type($iform['tmp_name']);
     if ($type !== 'image/png' && $type !== 'image/jpeg') {
       $error['image'] = 'type';
     }
-  }*/
+  }
 
   if (empty($error)) {
     $_SESSION['form'] = $form;
 
     //画像のアップロード
-    /*if ($image['name'] !== '') {
+    if ($image['name'] !== '') {
       $filename = date('YmdHis') . '_' . $image['name'];
-      if (!move_uploaded_file($image['tmp_name'], '../member_picture/' . $filename)) {
+      if (!move_uploaded_file($image['tmp_name'], '../picture/' . $filename)) {
         die('失敗しました');
       }
       $_SESSION['form']['image'] = $filename;
     } else {
       $_SESSION['form']['image'] = '';
-    }*/
+    }
 
     header('location: check.php');
     exit();
@@ -119,9 +119,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>写真</label>
         <input type="file" name="image" size="35" value="">
       </div>
-      <p class="error">＊写真などは「.png」または「.jpg」の画像を指定してください</p>
+      <?php if (isset($error['image']) && $error['image'] === 'type') : ?>
+        <p class="error">＊写真は「.png」または「.jpg」の画像を指定してください</p>
+      <?php endif; ?>
       <div>
-        <input type="text" name="member_id" value="<?php echo $id; ?>">
+        <input type="hidden" name="member_id" value="<?php echo $id; ?>">
       </div>
 
       <div class="btn-area">
