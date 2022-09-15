@@ -29,13 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
   $form['member_id'] = filter_input(INPUT_POST, 'member_id');
 
-  $form = $_FILES['image'];
-  if ($foem['name'] !== '' && $form['error'] === 0) {
-    $type = mime_content_type($iform['tmp_name']);
+  $image = $_FILES['image'];
+  if ($image['name'] !== '' && $image['error'] === 0) {
+    $type = mime_content_type($image['tmp_name']);
     if ($type !== 'image/png' && $type !== 'image/jpeg') {
       $error['image'] = 'type';
     }
   }
+
 
   if (empty($error)) {
     $_SESSION['form'] = $form;
@@ -86,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </header>
   <p class="form-title">メモ</p>
   <div class="form-content">
-    <form action="" method="post">
+    <form enctype="multipart/form-data" action="" method="post">
       <div class="form-list">
         <label>体重</label>
         <input name="weight" type="number" max="100" min="0" step="0.1">

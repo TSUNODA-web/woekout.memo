@@ -18,7 +18,7 @@
   <div class="form-title">会員登録フォーム</div>
   <p class="thanks">登録が完了しました</p>
   <div class="content">
-    <a href="../login.php" class="button">ログイン</a>
+    <a href="../login.php" class="button">一覧へ</a>
   </div>
 
 </body>

@@ -14,12 +14,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect();
   $db->begin_transaction();
-  $stmt = $db->prepare('insert into memos(member_id,weight,part,memo) VALUES(?,?,?,?)');
+  $stmt = $db->prepare('insert into memos(member_id,weight,part,memo,picture) VALUES(?,?,?,?,?)');
   if (!$stmt) {
     die($db->error);
   }
 
-  $stmt->bind_param('iiss', $form['member_id'], $form['weight'], $form['part'], $form['memo']);
+  $stmt->bind_param('iisss', $form['member_id'], $form['weight'], $form['part'], $form['memo'], $form['image']);
   $success = $stmt->execute();
   if (!$success) {
     die($db->error);
@@ -71,8 +71,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p class="check-list"><?php echo h($form['memo']); ?></p>
       </div>
       <div class="form-list">
-        <label>メモ</label>
-        <p class="check-list"><?php echo h($form['member_id']); ?></p>
+        <label>写真</label>
+        <img src="../picture/<?php echo h($form['image']); ?>" width="100" alt="" />
+
       </div>
 
       <div class="btn-area">
