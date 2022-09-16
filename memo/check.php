@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $stmt->bind_param('iisss', $form['member_id'], $form['weight'], $form['part'], $form['memo'], $form['image']);
   $success = $stmt->execute();
+  $db->commit();
   if (!$success) {
     die($db->error);
   }

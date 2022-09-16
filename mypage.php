@@ -40,7 +40,8 @@ $db = dbconnect();
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
-        <a href=" mypage.php?id=<?php echo ($id); ?>"><?php echo ($name); ?>様</a>
+        <a href="mypage.php?id=<?php echo h($id); ?>">マイページ</a>
+
       </li>
       <li class="nav-list-item">
         <a href="logout.php">ログアウト</a>

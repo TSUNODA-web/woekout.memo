@@ -71,6 +71,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <div class="form-list">
         <label>メールアドレス</label>
         <input name="email" type="email" value="<?php echo h($email); ?>">
+        <?php if (isset($error['login']) && $error['login'] === 'blank') : ?>
+          <p class="error">＊メールアドレスとパスワードをご記入ください</p>
+        <?php endif; ?>
+
       </div>
       <div class="form-list">
         <label>パスワード</label>
