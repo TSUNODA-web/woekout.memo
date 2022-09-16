@@ -14,6 +14,17 @@ if (!$id) {
   exit();
 }
 
+if (isset($_GET['action']) && $_GET['action'] === 'rewrite' && isset($_SESSION['form'])) {
+  $form = $_SESSION['form'];
+} else {
+  $form = [
+    'weight' => '',
+    'part' => '',
+    'memo' => ''
+  ];
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $form['weight'] = filter_input(INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_INT);
   if ($form['weight'] === '') {
@@ -81,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="../mypage.php?id=<?php echo h($id); ?>">マイページ</a>
       </li>
       <li class="nav-list-item">
-        <a href="logout.php">ログアウト</a>
+        <a href="../logout.php">ログアウト</a>
       </li>
     </ul>
   </header>
@@ -90,14 +101,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <form enctype="multipart/form-data" action="" method="post">
       <div class="form-list">
         <label>体重</label>
-        <input name="weight" type="number" max="100" min="0" step="0.1">
+        <input name="weight" type="number" max="100" min="0" step="0.1" value="<?php echo h($form['weight']); ?>">
       </div>
       <?php if (isset($error['weight']) && $error['weight'] === 'blank') :  ?>
         <p class="error">＊選択してください</p>
       <?php endif; ?>
       <div class="form-list">
         <label>部位</label>
-        <select name="part">
+        <select name="part" value="<?php echo h($form['part']); ?>">
           <option value="">選択してください</option>
           <option value="胸">胸</option>
           <option value="肩">肩</option>
@@ -111,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <?php endif; ?>
       <div class="form-list">
         <label>メモ</label>
-        <textarea name="memo" cols="50" rows="5"></textarea>
+        <textarea name="memo" cols="50" rows="5" value="<?php echo h($form['memo']); ?>"></textarea>
       </div>
       <?php if (isset($error['memo']) && $error['memo'] === 'blank') : ?>
         <p class="error">＊入力してください</p>

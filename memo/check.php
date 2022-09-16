@@ -44,14 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
   <header>
-    <h1 class="headline"><a href="">筋トレメモ</a>
+    <h1 class="headline"><a href=" ../index.php?id=<?php echo h($id); ?>">筋トレメモ</a>
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
-        <a href=" mypage.php?id=<?php echo h($id); ?>">マイページ</a>
+        <a href=" ../mypage.php?id=<?php echo h($id); ?>">マイページ</a>
       </li>
       <li class="nav-list-item">
-        <a href="logout.php">ログアウト</a>
+        <a href="../logout.php">ログアウト</a>
       </li>
     </ul>
   </header>
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <div class="btn-area">
-        <a href="post.php?action=rewrite" class="button">書き直す</a>
+        <a href="post.php?id=<?php echo h($id); ?>?action=rewrite" class="button">書き直す</a>
         <input type="submit" value="メモする" />
       </div>
     </form>
