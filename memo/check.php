@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!$success) {
     die($db->error);
   }
+  unset($_SESSION['form']);
   header('Location:thanks.php');
 }
 ?>

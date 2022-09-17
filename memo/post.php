@@ -4,25 +4,22 @@ require('/Applications/MAMP/htdocs/workout.memo/library.php');
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $id = $_SESSION['id'];
 } else {
-  header('Location: login.php');
+  header('Location: ../login.php');
   exit();
 }
 
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 if (!$id) {
-  header('Location: index.php');
+  header('Location: ../login.php');
   exit();
 }
 
-if (isset($_GET['action']) && $_GET['action'] === 'rewrite' && isset($_SESSION['form'])) {
+if (isset($_GET['action']) && $_GET['action'] === 'rewrite' && isset($id) && isset($_SESSION['form'])) {
   $form = $_SESSION['form'];
 } else {
-  $form = [
-    'weight' => '',
-    'part' => '',
-    'memo' => ''
-  ];
+  var_dump($form);
 }
+
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
