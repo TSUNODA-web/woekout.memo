@@ -10,7 +10,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 
-
+var_dump($form);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect();
   $db->begin_transaction();
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     die($db->error);
   }
 
-  $stmt->bind_param('iisss', $form['member_id'], $form['weight'], $form['part'], $form['memo'], $form['image']);
+  $stmt->bind_param('issss', $form['member_id'], $form['weight'], $form['part'], $form['memo'], $form['image']);
   $success = $stmt->execute();
   $db->commit();
   if (!$success) {
@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <div class="btn-area">
-        <a href="post.php?id=<?php echo h($id); ?>?action=rewrite" class="button">書き直す</a>
+        <a href="post.php?action=rewrite" class="button">書き直す</a>
         <input type="submit" value="メモする" />
       </div>
     </form>

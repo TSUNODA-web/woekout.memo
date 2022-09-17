@@ -8,22 +8,24 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 
-$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-if (!$id) {
-  header('Location: ../login.php');
-  exit();
-}
-
 if (isset($_GET['action']) && $_GET['action'] === 'rewrite' && isset($id) && isset($_SESSION['form'])) {
   $form = $_SESSION['form'];
-} else {
   var_dump($form);
+} else {
+  $form = [
+    'weight' => '',
+    'part' => '',
+    'memo' => ''
+  ];
 }
 
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $form['weight'] = filter_input(INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_INT);
+
+  $form['weight'] = filter_input(INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
+
   if ($form['weight'] === '') {
     $error['weight'] = 'blank';
   }
@@ -105,28 +107,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <?php endif; ?>
       <div class="form-list">
         <label>部位</label>
-        <select name="part" value="<?php echo h($form['part']); ?>">
-          <option value="">選択してください</option>
-          <option value="胸">胸</option>
-          <option value="肩">肩</option>
-          <option value="腕">腕</option>
-          <option value="背中">背中</option>
-          <option value="足">足</option>
-        </select>
+        <input name="part" type="text" value="<?php echo h($form['part']); ?>">
       </div>
       <?php if (isset($error['part']) && $error['part'] === 'blank') :  ?>
         <p class="error">＊選択してください</p>
       <?php endif; ?>
       <div class="form-list">
         <label>メモ</label>
-        <textarea name="memo" cols="50" rows="5" value="<?php echo h($form['memo']); ?>"></textarea>
+        <textarea name="memo" cols="50" rows="5"><?php echo h($form['memo']); ?></textarea>
       </div>
       <?php if (isset($error['memo']) && $error['memo'] === 'blank') : ?>
         <p class="error">＊入力してください</p>
       <?php endif; ?>
       <div class="form-list">
         <label>写真</label>
-        <input type="file" name="image" size="35" value="">
+        <input type="file" name="image" size="35">
       </div>
       <?php if (isset($error['image']) && $error['image'] === 'type') : ?>
         <p class="error">＊写真は「.png」または「.jpg」の画像を指定してください</p>
@@ -136,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <div class="btn-area">
-        <input type="submit" name="" value="メモする">
+        <input type="submit" name="" value="入力内容確認">
       </div>
     </form>
   </div>
