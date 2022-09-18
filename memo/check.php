@@ -14,7 +14,7 @@ var_dump($form);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect();
   $db->begin_transaction();
-  $stmt = $db->prepare('insert into memos(member_id,weight,part,memo,picture) VALUES(?,?,?,?,?)');
+  $stmt = $db->prepare('insert into posts(member_id,weight,part,memo,picture) VALUES(?,?,?,?,?)');
   if (!$stmt) {
     die($db->error);
   }

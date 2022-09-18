@@ -12,6 +12,19 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
 
 $db = dbconnect();
 
+$stmt = $db->prepare('select p.id, p.member_id,p.weight, p.created, p.part, p.memo, p.picture, m.name from posts p, members m where m.id=p.member_id order by id desc');
+
+if (!$stmt) {
+  die($db->error);
+}
+$success = $stmt->execute();
+$stmt->bind_result($id, $member_id, $weight, $created, $part, $memo, $picture, $name);
+while ($stmt->fetch());
+var_dump($id, $memo, $part, $picture);
+
+
+
+
 ?>
 
 
@@ -42,53 +55,54 @@ $db = dbconnect();
   </header>
   <div id="cards">
     <div class="card">
-      <div class="picture"><img src="" alt="" /></div>
+      <?php if ($picture) : ?>
+        <div class="picture"><img src="picture/<?php echo h($picture); ?>" />
+        </div>
+      <?php endif; ?>
       <div class="description">
-        <p>
-          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
-        </p>
+        <p><?php echo h($memo); ?></p>
       </div>
     </div>
     <div class="card" id="card-center">
-      <div class="picture"><img src="image2.jpg" alt="" /></div>
+      <?php if ($picture) : ?>
+        <div class="picture"><img src="picuture" <?php echo h($picture); ?>></div>
+      <?php endif; ?>
       <div class="description">
-        <p>
-          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
-        </p>
+        <p><?php echo h($memo); ?></p>
       </div>
     </div>
     <div class="card">
-      <div class="picture"><img src="image3.jpg" alt="" /></div>
+      <?php if ($picture) : ?>
+        <div class="picture"><img src="picuture" <?php echo h($picture); ?>></div>
+      <?php endif; ?>
       <div class="description">
-        <p>
-          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
-        </p>
+        <p><?php echo h($memo); ?></p>
       </div>
     </div>
   </div>
   <div id="cards">
     <div class="card">
-      <div class="picture"><img src="" alt="" /></div>
+      <?php if ($picture) : ?>
+        <div class="picture"><img src="picuture" <?php echo h($picture); ?>></div>
+      <?php endif; ?>
       <div class="description">
-        <p>
-          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
-        </p>
+        <p><?php echo h($memo); ?></p>
       </div>
     </div>
     <div class="card" id="card-center">
-      <div class="picture"><img src="image2.jpg" alt="" /></div>
+      <?php if ($picture) : ?>
+        <div class="picture"><img src="picuture/" <?php echo h($picture); ?>></div>
+      <?php endif; ?>
       <div class="description">
-        <p>
-          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
-        </p>
+        <p><?php echo h($memo); ?></p>
       </div>
     </div>
     <div class="card">
-      <div class="picture"><img src="image3.jpg" alt="" /></div>
+      <?php if ($picture) : ?>
+        <div class="picture"><img src="picuture" <?php echo h($picture); ?>></div>
+      <?php endif; ?>
       <div class="description">
-        <p>
-          ここにテキストが入ります。ここにテキストが入ります。ここにテキストが入ります。
-        </p>
+        <p><?php echo h($memo); ?></p>
       </div>
     </div>
   </div>
