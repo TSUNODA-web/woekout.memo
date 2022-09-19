@@ -20,7 +20,7 @@ if (!$stmt) {
 $success = $stmt->execute();
 $stmt->bind_result($id, $member_id, $weight, $created, $part, $memo, $picture, $name);
 while ($stmt->fetch());
-var_dump($id, $memo, $part, $picture);
+var_dump($id, $member_id, $weight, $created, $part, $memo, $picture, $name);
 
 
 
@@ -56,53 +56,71 @@ var_dump($id, $memo, $part, $picture);
   <div id="cards">
     <div class="card">
       <?php if ($picture) : ?>
-        <div class="picture"><img src="picture/<?php echo h($picture); ?>" />
+        <div class="picture"><a href="view.php"><img src="picture/<?php echo h($picture); ?>"></a>
         </div>
       <?php endif; ?>
       <div class="description">
-        <p><?php echo h($memo); ?></p>
+        <p>[部位]<?php echo h($part); ?></p>
+        <br>
+        <p class="day">[投稿日]<?php echo h($created); ?></p>
+
       </div>
     </div>
-    <div class="card" id="card-center">
+    <div class=" card" id="card-center">
       <?php if ($picture) : ?>
-        <div class="picture"><img src="picuture" <?php echo h($picture); ?>></div>
+        <div class="picture"><a href="view.php"><img src="picture/<?php echo h($picture); ?>"></a>
+        </div>
       <?php endif; ?>
       <div class="description">
-        <p><?php echo h($memo); ?></p>
+        <p>[部位]<?php echo h($part); ?></p>
+        <br>
+        <p class="day">[投稿日]<?php echo h($created); ?></p>
       </div>
     </div>
     <div class="card">
       <?php if ($picture) : ?>
-        <div class="picture"><img src="picuture" <?php echo h($picture); ?>></div>
+        <div class="picture"><a href="view.php"><img src="picture/<?php echo h($picture); ?>"></a>
+        </div>
       <?php endif; ?>
       <div class="description">
-        <p><?php echo h($memo); ?></p>
+        <p>[部位]<?php echo h($part); ?></p>
+        <br>
+        <p class="day">[投稿日]<?php echo h($created); ?></p>
       </div>
     </div>
   </div>
   <div id="cards">
     <div class="card">
       <?php if ($picture) : ?>
-        <div class="picture"><img src="picuture" <?php echo h($picture); ?>></div>
+        <div class="picture"><a href="view.php"><img src="picture/<?php echo h($picture); ?>"></a>
+        </div>
       <?php endif; ?>
       <div class="description">
-        <p><?php echo h($memo); ?></p>
+        <p>[部位]<?php echo h($part); ?></p>
+        <br>
+        <p class="day">[投稿日]<?php echo h($created); ?></p>
       </div>
     </div>
     <div class="card" id="card-center">
       <?php if ($picture) : ?>
-        <div class="picture"><img src="picuture/" <?php echo h($picture); ?>></div>
+        <div class="picture"><a href="view.php"><img src="picture/<?php echo h($picture); ?>"></a>
+        </div>
       <?php endif; ?>
       <div class="description">
-        <p><?php echo h($memo); ?></p>
+        <p>[部位]<?php echo h($part); ?></p>
+        <br>
+        <p class="day">[投稿日]<?php echo h($created); ?></p>
       </div>
     </div>
     <div class="card">
       <?php if ($picture) : ?>
-        <div class="picture"><img src="picuture" <?php echo h($picture); ?>></div>
+        <div class="picture"><a href="view.php"><img src="picture/<?php echo h($picture); ?>"></a>
+        </div>
       <?php endif; ?>
       <div class="description">
-        <p><?php echo h($memo); ?></p>
+        <p>[部位]<?php echo h($part); ?></p>
+        <br>
+        <p class="day">[投稿日]<?php echo h($created); ?></p>
       </div>
     </div>
   </div>

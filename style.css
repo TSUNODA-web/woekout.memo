@@ -168,3 +168,8 @@ textarea {
 input[type="file"] {
   padding: 10px;
 }
+
+.view {
+  text-decoration: none;
+  color: dimgray;
+}
