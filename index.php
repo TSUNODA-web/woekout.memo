@@ -52,18 +52,23 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $stmt->bind_result($id, $member_id, $created, $part, $picture);
   while ($stmt->fetch()) :
   ?>
-    <div class="card">
-      <?php if ($picture) : ?>
-        <div class="picture"><a href="view.php"><img src="picture/<?php echo h($picture); ?>"></a>
+    <div id="cards">
+      <div class="card">
+        <?php if ($picture) : ?>
+          <div class="picture"><a href="view.php"><img src="picture/<?php echo h($picture); ?>"></a>
+          </div>
+        <?php endif; ?>
+        <div class="description">
+          <p>[部位]<?php echo h($part); ?></p>
+          <br>
+          <p class="day">[投稿日]<?php echo h($created); ?></p>
         </div>
-      <?php endif; ?>
-      <div class="description">
-        <p>[部位]<?php echo h($part); ?></p>
-        <br>
-        <p class="day">[投稿日]<?php echo h($created); ?></p>
       </div>
     </div>
   <?php endwhile; ?>
+  <div class="btn-area">
+    <a href="memo/post.php?id=<?php echo h($member_id); ?>" class="button">メモする</a>
+  </div>
 
 
 

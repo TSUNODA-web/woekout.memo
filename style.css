@@ -119,13 +119,13 @@ button {
 }
 
 #cards {
-  display: flex;
+  display: inline-block;
   justify-content: center;
   margin: 20px;
 }
 
 .card {
-  width: 300px;
+  width: 370px;
   height: 315px;
   border: 1px solid lightgray;
 }
@@ -167,15 +167,4 @@ textarea {
 
 input[type="file"] {
   padding: 10px;
-}
-
-.view {
-  text-decoration: none;
-  color: dimgray;
-}
-
-#views {
-  display: flex;
-  justify-content: center;
-  margin: 20px;
 }
