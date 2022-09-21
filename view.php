@@ -1,3 +1,26 @@
+<?php
+session_start();
+require('library.php');
+
+if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
+  $member_id = $_SESSION['id'];
+  $name = $_SESSION['name'];
+} else {
+  header('Location: login.php');
+  exit();
+}
+
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+if (!$id) {
+  header('Location: index.php');
+  exit();
+}
+var_dump($id, $member_id);
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -9,6 +32,15 @@
   <link rel="stylesheet" href="style.css" />
   <title>メモ詳細</title>
 </head>
+<?php
+$db = dbconnect();
+
+$stmt = $db->prepare('select p.id, p.member_id, p.created, p.part, p.picture from posts p where p.member_id=? order by p.id desc');
+if (!$stmt) {
+  die($db->error);
+}
+
+?>
 
 <body>
   <header>
