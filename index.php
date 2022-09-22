@@ -57,7 +57,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
     <div id="cards">
       <div class="card">
         <?php if ($picture) : ?>
-          <div class="picture"><a href="view.php?id=<?php echo h($id); ?>"><img src="picture/<?php echo h($picture); ?>"></a>
+          <div class="picture"><a href="detail.php?id=<?php echo h($id); ?>"><img src="picture/<?php echo h($picture); ?>"></a>
           </div>
         <?php endif; ?>
         <div class="description">

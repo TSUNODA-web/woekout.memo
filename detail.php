@@ -26,7 +26,6 @@ if (!$success) {
   die($db->error);
 }
 $stmt->bind_result($id, $member_id, $created, $picture, $weight, $part, $memo, $member_id);
-var_dump($id, $member_id, $created, $picture, $weight, $part, $memo, $member_id);
 while ($stmt->fetch()) :
 
 ?>
@@ -50,7 +49,7 @@ while ($stmt->fetch()) :
 
   <body>
     <header>
-      <h1><a href="">筋トレメモ</a></h1>
+      <h1><a href="index.php">筋トレメモ</a></h1>
       <ul class="nav-list">
         <li class="nav-list-item">
           <a href=" mypage.php">マイページ</a>
@@ -60,27 +59,36 @@ while ($stmt->fetch()) :
         </li>
       </ul>
     </header>
-    <div id="cards">
-      <div class="card">
-        <?php if ($picture) : ?>
-          <div class="picture"><a href="view.php?id=<?php echo h($id); ?>"><img src="picture/<?php echo h($picture); ?>"></a>
+    <p class="form-title">詳細</p>
+    <div class="form-content">
+      <form action="" method="post">
+        <div class="form-list">
+          <div class="detail-picture">
+            <img src="picture/<?php echo h($picture); ?>">
           </div>
-        <?php endif; ?>
-        <div class="description">
-          <p>[部位]<?php echo h($part); ?></p>
-          <br>
-          <p class="day">[投稿日]<?php echo h($created); ?></p>
+          <div class="form-list">
+            <label>体重</label>
+            <input name="weight" type="text" value="<?php echo h($weight); ?>">
+          </div>
+          <div class="form-list">
+            <label>部位</label>
+            <input name="part" type="text" value="<?php echo h($part); ?>">
+          </div>
+          <div class="form-list">
+            <label>メモ</label>
+            <textarea name="memo" cols="50" rows="5"><?php echo h($memo) ?></textarea>
+          </div>
+          <div>
+            <input type="hidden" name="id" value="<?php echo h($id); ?>">
+          </div>
+        <?php endwhile; ?>
+        <div class="btn-area">
+          <?php if ($_SESSION['id'] === $member_id) : ?>
+            <a href="delete.php?id=<?php echo h($id); ?>" class="button">削除する</a>
+          <?php endif; ?>
         </div>
-      </div>
+      </form>
     </div>
-  <?php endwhile; ?>
-  <div class="btn-area">
-    <?php if ($_SESSION['id'] === $member_id) : ?>
-      <a href="delete.php?id=<?php echo h($member_id); ?>" class="button">削除する</a>
-    <?php endif; ?>
-
-  </div>
-
   </body>
 
   </html>
