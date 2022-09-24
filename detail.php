@@ -44,8 +44,32 @@ while ($stmt->fetch()) :
     <link rel="stylesheet" href="style.css" />
     <title>メモ詳細</title>
   </head>
+  <?
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $form['weight'] = filter_input(INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
 
+    if ($form['weight'] === '') {
+      $error['weight'] = 'blank';
+    }
+    $form['part'] = filter_input(INPUT_POST, 'part');
+    if ($form['part'] === '') {
+      $error['part'] = 'blank';
+    }
+    $form['memo'] = filter_input(INPUT_POST, 'memo');
+    if ($form['memo'] === '') {
+      $error['memo'] = 'blank';
+    }
+    $form['member_id'] = filter_input(INPUT_POST, 'member_id');
+  }
+  if (empty($error)) {
+    $_SESSION['form'] = $form;
+
+    header('location: memos_update.php');
+    exit();
+  }
+  ?>
 
   <body>
     <header>

@@ -2,34 +2,30 @@
 session_start();
 require('library.php');
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
-  $id = $_POST['id'];
-  $name = $_POST['name'];
-  $email = $_POST['email'];
+  $id = $_SESSION['id'];
 } else {
   header('Location: login.php');
   exit();
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $id = $_POST['id'];
   $name = $_POST['name'];
   $email = $_POST['email'];
-
   $db = dbconnect();
-  try {
-    $db->begin_transaction();
-    $stmt = $db->prepare("UPDATE members SET `name` = :`name`, email = :email WHERE id = :id");
-    if ($stmt === false) {
-      die($db->error);
-    }
-    $stmt->execute(array(':name' => $_POST['name'], ':email' => $_POST['email'], ':id' => $_POST['id']));
-  } catch (PDOException $e) {
-    echo $e->getMessage();
-    die();
+  $db->begin_transaction();
+  $stmt = $db->prepare('UPDATE members SET name = ?,email =? WHERE members.id = ?;');
+  if (!$stmt) {
+    die($db->error);
   }
+  $stmt->bind_param('ssi', $name, $email, $id);
+  $success = $stmt->execute();
+  $db->commit();
+  if (!$success) {
+    die($db->error);
+  }
+
+  unset($_SESSION['name,email']);
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -59,8 +55,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </header>
   <div class="form-title">フォーム</div>
   <p class="thanks">更新が完了しました</p>
+  <p class="thanks">再度ログインしてください</p>
+
   <div class="content">
-    <a href="index.php" class="button">戻る</a>
+    <a href="login.php" class="button">ログイン</a>
   </div>
 
 </body>
