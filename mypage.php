@@ -66,7 +66,7 @@ $db = dbconnect();
         <input type="submit" name="" value="更新する">
       </div>
     </form>
-    <button onclick="location.href='./view/password_reset.php?id=<?php echo ($id); ?>'">パスワードの変更はこちら</button>
+    <button onclick="location.href='password_reset.php?id=<?php echo ($id); ?>'">パスワードの変更はこちら</button>
   </div>
 </body>
 

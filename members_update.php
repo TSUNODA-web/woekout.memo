@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $email = $_POST['email'];
   $db = dbconnect();
   $db->begin_transaction();
-  $stmt = $db->prepare('UPDATE members SET name = ?,email =? WHERE members.id = ?;');
+  $stmt = $db->prepare('UPDATE members SET name = ?,email =?,updated = CURRENT_TIMESTAMP WHERE members.id = ?;');
   if (!$stmt) {
     die($db->error);
   }
@@ -23,8 +23,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!$success) {
     die($db->error);
   }
+  // セッションの値を初期化
+  $_SESSION = array();
 
-  unset($_SESSION['name,email']);
+  // セッションを破棄
+  session_destroy();
 }
 ?>
 
