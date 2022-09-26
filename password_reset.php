@@ -7,6 +7,37 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   header('Location: login.php');
   exit();
 }
+$db = dbconnect();
+$stmt = $db->prepare('select count(*) from members where password=? ');
+if (!$stmt) {
+  die($db->error);
+}
+$stmt->bind_param('s', $form['password']);
+$success = $stmt->execute();
+if (!$success) {
+  die($db->error);
+}
+
+$stmt->bind_result($cnt);
+$stmt->fetch();
+
+if ($cnt > 0) {
+  $error['password'] = 'duplicate';
+}
+
+
+$form['password'] = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+if ($form['password'] === '') {
+  $error['password'] = 'blank';
+} elseif (strlen($form['password']) < 8) {
+  $error['password'] = 'length';
+}
+if (empty($error)) {
+  $_SESSION['form'] = $form;
+  header('Location: thanks.php');
+  exit();
+}
+
 ?>
 
 <!DOCTYPE html>
