@@ -28,6 +28,29 @@ if (!$success) {
 $stmt->bind_result($id, $member_id, $created, $picture, $weight, $part, $memo, $member_id);
 while ($stmt->fetch()) :
 
+  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $form['part'] = filter_input(INPUT_POST, 'part');
+    if ($form['part'] === '') {
+      $error['part'] = 'blank';
+    }
+    $form['weight'] = filter_input(INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    if ($form['weight'] === '') {
+      $error['weight'] = 'blank';
+    }
+    $form['memo'] = filter_input(INPUT_POST, 'memo');
+    if ($form['memo'] === '') {
+      $error['memo'] = 'blank';
+    }
+    $form['id'] = filter_input(INPUT_POST, 'id');
+
+
+    if (empty($error)) {
+      $_SESSION['form'] = $form;
+
+      header('location: memos_update.php');
+      exit();
+    }
+  }
 ?>
 
 
@@ -44,33 +67,8 @@ while ($stmt->fetch()) :
     <link rel="stylesheet" href="style.css" />
     <title>メモ詳細</title>
   </head>
-  <?
-
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    $form['weight'] = filter_input(INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
 
-    if ($form['weight'] === '') {
-      $error['weight'] = 'blank';
-    }
-    $form['part'] = filter_input(INPUT_POST, 'part');
-    if ($form['part'] === '') {
-      $error['part'] = 'blank';
-    }
-    $form['memo'] = filter_input(INPUT_POST, 'memo');
-    if ($form['memo'] === '') {
-      $error['memo'] = 'blank';
-    }
-    $form['id'] = filter_input(INPUT_POST, 'id');
-    if (empty($error)) {
-      $_SESSION['form'] = $form;
-
-      header('location: memos_update.php');
-      exit();
-    }
-  }
-  ?>
 
   <body>
     <header>
@@ -86,43 +84,43 @@ while ($stmt->fetch()) :
     </header>
     <p class="form-title">詳細</p>
     <div class="form-content">
-      <form action="" method="post">
+      <div class="form-list">
+        <div class="detail-picture">
+          <?php if ($picture) : ?>
+            <div class="picture">
+              <img src="picture/<?php echo h($picture); ?>">
+            </div>
+          <?php else : ?>
+            <div class="picture">
+              <img src="empty_image/20200501_noimage.jpg">
+            </div>
+          <?php endif; ?>
+        </div>
+      </div>
+      <form action="" enctype="multipart/form-data" method="post">
         <div class="form-list">
-          <div class="detail-picture">
-            <?php if ($picture) : ?>
-              <div class="picture">
-                <img src="picture/<?php echo h($picture); ?>">
-              <?php else : ?>
-                <div class="picture">
-                  <img src="empty_image/20200501_noimage.jpg">
-                </div>
-              <?php endif; ?>
-              </div>
-              <div class="form-list">
-                <label>部位</label>
-                <input name="part" type="text" value="<?php echo h($part); ?>">
-              </div>
-              <div class="form-list">
-                <label>体重</label>
-                <input name="weight" type="text" value="<?php echo h($weight); ?>">
-                <?php if (isset($error['weight']) && $error['weight'] === 'blank') :  ?>
-                  <p class="error">＊選択してください</p>
-                <?php endif; ?>
-              </div>
-              <div class="form-list">
-                <label>メモ</label>
-                <textarea name="memo" cols="50" rows="5"><?php echo h($memo) ?></textarea>
-              </div>
-              <div>
-                <input type="hidden" name="id" value="<?php echo h($id); ?>">
-              </div>
-            <?php endwhile; ?>
-            <div class="btn-area">
-              <input type="submit" name="" value="編集する">
+          <label>部位</label>
+          <input name="part" type="text" value="<?php echo h($part); ?>">
+        </div>
+        <div class="form-list">
+          <label>体重</label>
+          <input name="weight" type="text" value="<?php echo h($weight); ?>">
+        </div>
+        <div class="form-list">
+          <label>メモ</label>
+          <textarea name="memo" cols="50" rows="5"><?php echo h($memo) ?></textarea>
+        </div>
+        <div>
+          <input type="hidden" name="id" value="<?php echo h($id); ?>">
+        </div>
+      <?php endwhile; ?>
+      <div class="btn-area">
+        <input type="submit" name="" value="編集する">
+      </div>
+      <div class="btn-area">
+        <a href="delete.php?id=<?php echo h($id); ?>" class="button">削除する</a>
       </form>
     </div>
-    <div class="btn-area">
-      <a href="delete.php?id=<?php echo h($id); ?>" class="button">削除する</a>
     </div>
   </body>
 

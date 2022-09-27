@@ -24,8 +24,6 @@ if (isset($_GET['action']) && $_GET['action'] === 'rewrite' && isset($id) && iss
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   $form['weight'] = filter_input(INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-
-
   if ($form['weight'] === '') {
     $error['weight'] = 'blank';
   }

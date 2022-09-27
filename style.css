@@ -119,7 +119,9 @@ button {
 }
 
 #cards {
-  display: flex;
+  display: inline-block;
+  margin-left: 40px;
+  margin-top: 10px
 }
 
 .card {

@@ -10,7 +10,6 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 
-var_dump($form);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect();
   $db->begin_transaction();

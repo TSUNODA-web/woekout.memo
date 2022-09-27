@@ -1,7 +1,6 @@
-<?
+<?php
 session_start();
 require('library.php');
-
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $member_id = $_SESSION['id'];
 } else {
@@ -10,31 +9,18 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $db = dbconnect();
-  $weight = $_POST['weigt'];
-  $part = $_POST['part'];
-  $memo = $_POST['memo'];
-  $id = $_POST['id'];
-  var_dump($_POST);
-  /*$db->begin_transaction();
-  $stmt = $db->prepare('UPDATE posts SET weight = ?,part =?,
-  memo = ?,updated = CURRENT_TIMESTAMP WHERE id = ?;');
+  //$part = $_POST['part'];
+  /*$db = dbconnect();
+  $db->begin_transaction();
+  $stmt = $db->prepare('update posts set(part,weight,memo,id) VALUES(?,?,?,?)');
   if (!$stmt) {
     die($db->error);
-  }
-  /*$stmt->bind_param('ssii', $name, $email, $id,);
-  $success = $stmt->execute();
-  $db->commit();
-  if (!$success) {
-    die($db->error);
-  }
-  // セッションの値を初期化
-  $_SESSION = array();
-
-  // セッションを破棄
-  session_destroy();*/
+  }*/
 }
+var_dump($_SESSION);
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -54,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
-        <a href=" mypage.php?id=<?php echo h($id); ?>"><?php echo h($name); ?>様</a>
+        <a href=" mypage.php?id=<?php echo h($member_id); ?>">マイページ</a>
       </li>
       <li class="nav-list-item">
         <a href="logout.php">ログアウト</a>
