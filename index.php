@@ -58,13 +58,16 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
       <div class="card">
         <?php if ($picture) : ?>
           <div class="picture"><a href="detail.php?id=<?php echo h($id); ?>"><img src="picture/<?php echo h($picture); ?>"></a>
+          <?php else : ?>
+            <div class="picture"><a href="detail.php?id=<?php echo h($id); ?>"><img src="empty_image/20200501_noimage.jpg"></a>
+            </div>
+          <?php endif; ?>
+          <div class="description">
+            <p>[部位]<?php echo h($part); ?></p>
+            <br>
+            <p class="day">[投稿日]<?php echo h($created); ?></p>
           </div>
-        <?php endif; ?>
-        <div class="description">
-          <p>[部位]<?php echo h($part); ?></p>
-          <br>
-          <p class="day">[投稿日]<?php echo h($created); ?></p>
-        </div>
+          </div>
       </div>
     </div>
   <?php endwhile; ?>

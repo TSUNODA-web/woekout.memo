@@ -17,7 +17,11 @@ $success = $stmt->execute();
 if (!$success) {
   die($db->error);
 }
-
+$stmt->bind_param('s', $form['password']);
+$success = $stmt->execute();
+if (!$success) {
+  die($db->error);
+}
 $stmt->bind_result($cnt);
 $stmt->fetch();
 
@@ -72,6 +76,10 @@ if (empty($error)) {
       <div class="form-list">
         <label>現在のパスワード</label>
         <input name="password" type="password" value="">
+        <?php if (isset($error['password']) && $error['password'] === 'blank') : ?>
+          <p class="error">＊パスワードが一致しません</p>
+        <?php endif; ?>
+
       </div>
       <div class="form-list">
         <label>新しいパスワード</label>
