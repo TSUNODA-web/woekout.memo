@@ -3,21 +3,31 @@ session_start();
 require('library.php');
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $member_id = $_SESSION['id'];
+  $form = $_SESSION['form'];
 } else {
   header('Location: login.php');
   exit();
 }
-
+var_dump($form);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  //$part = $_POST['part'];
-  /*$db = dbconnect();
+  $db = dbconnect();
   $db->begin_transaction();
-  $stmt = $db->prepare('update posts set(part,weight,memo,id) VALUES(?,?,?,?)');
+  $stmt = $db->prepare('update posts SET (part,weight,memo,id) VALUES(?,?,?,?)');
+
   if (!$stmt) {
     die($db->error);
-  }*/
+  }
+
+  $stmt->bind_param('sssi', $form['part'], $form['weight'], $form['memo'], $form['id']);
+  $success = $stmt->execute();
+  $db->commit();
+
+  if (!$success) {
+    die($db->error);
+  }
+
+  $_SESSION = array();
 }
-var_dump($_SESSION);
 ?>
 
 

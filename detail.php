@@ -43,7 +43,6 @@ while ($stmt->fetch()) :
     }
     $form['id'] = filter_input(INPUT_POST, 'id');
 
-
     if (empty($error)) {
       $_SESSION['form'] = $form;
 
@@ -84,20 +83,20 @@ while ($stmt->fetch()) :
     </header>
     <p class="form-title">詳細</p>
     <div class="form-content">
-      <div class="form-list">
-        <div class="detail-picture">
-          <?php if ($picture) : ?>
-            <div class="picture">
-              <img src="picture/<?php echo h($picture); ?>">
-            </div>
-          <?php else : ?>
-            <div class="picture">
-              <img src="empty_image/20200501_noimage.jpg">
-            </div>
-          <?php endif; ?>
+      <form action="" method="post">
+        <div class="form-list">
+          <div class="detail-picture">
+            <?php if ($picture) : ?>
+              <div class="picture">
+                <img src="picture/<?php echo h($picture); ?>">
+              </div>
+            <?php else : ?>
+              <div class="picture">
+                <img src="empty_image/20200501_noimage.jpg">
+              </div>
+            <?php endif; ?>
+          </div>
         </div>
-      </div>
-      <form action="" enctype="multipart/form-data" method="post">
         <div class="form-list">
           <label>部位</label>
           <input name="part" type="text" value="<?php echo h($part); ?>">
@@ -119,8 +118,8 @@ while ($stmt->fetch()) :
       </div>
       <div class="btn-area">
         <a href="delete.php?id=<?php echo h($id); ?>" class="button">削除する</a>
+      </div>
       </form>
-    </div>
     </div>
   </body>
 
