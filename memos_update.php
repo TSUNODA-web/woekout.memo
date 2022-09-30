@@ -3,30 +3,36 @@ session_start();
 require('library.php');
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $member_id = $_SESSION['id'];
-  $form = $_SESSION['form'];
 } else {
   header('Location: login.php');
   exit();
 }
-var_dump($form);
+$memos = array();
+
+if (!empty($_POST)) {
+  foreach ($_POST as $key => $value) {
+    $memos[$key] = h($value);
+  }
+}
+
+
+var_dump($memos);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect();
   $db->begin_transaction();
-  $stmt = $db->prepare('update posts SET (part,weight,memo,id) VALUES(?,?,?,?)');
+  $stmt = $db->prepare('update posts SET part=?,weight=?,memo=? where id=?;');
 
   if (!$stmt) {
     die($db->error);
   }
 
-  $stmt->bind_param('sssi', $form['part'], $form['weight'], $form['memo'], $form['id']);
+  $stmt->bind_param('sisi', $memos['part'], $memos['weight'], $memos['memo'], $memos['id']);
   $success = $stmt->execute();
   $db->commit();
 
   if (!$success) {
     die($db->error);
   }
-
-  $_SESSION = array();
 }
 ?>
 

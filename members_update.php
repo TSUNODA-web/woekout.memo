@@ -7,10 +7,16 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   header('Location: login.php');
   exit();
 }
-var_dump($_POST['name']);
+$member = array();
+if (!empty($_POST)) {
+  foreach ($_POST as $key => $value) {
+    $member[$key] = h($value);
+  }
+}
+
+
+var_dump($member);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $name = $_POST['name'];
-  $email = $_POST['email'];
   $db = dbconnect();
   $db->begin_transaction();
   $stmt = $db->prepare('UPDATE members SET name = ?,email =?,updated = CURRENT_TIMESTAMP WHERE members.id = ?;');
@@ -49,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
-        <a href=" mypage.php?id=<?php echo h($id); ?>"><?php echo h($name); ?>様</a>
+        <a href=" mypage.php?id=<?php echo h($id); ?>">マイページ</a>
       </li>
       <li class="nav-list-item">
         <a href="logout.php">ログアウト</a>

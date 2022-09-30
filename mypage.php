@@ -16,7 +16,6 @@ if (!$id) {
   exit();
 }
 
-$db = dbconnect();
 
 
 

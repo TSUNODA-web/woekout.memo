@@ -28,28 +28,6 @@ if (!$success) {
 $stmt->bind_result($id, $member_id, $created, $picture, $weight, $part, $memo, $member_id);
 while ($stmt->fetch()) :
 
-  if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $form['part'] = filter_input(INPUT_POST, 'part');
-    if ($form['part'] === '') {
-      $error['part'] = 'blank';
-    }
-    $form['weight'] = filter_input(INPUT_POST, 'weight', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-    if ($form['weight'] === '') {
-      $error['weight'] = 'blank';
-    }
-    $form['memo'] = filter_input(INPUT_POST, 'memo');
-    if ($form['memo'] === '') {
-      $error['memo'] = 'blank';
-    }
-    $form['id'] = filter_input(INPUT_POST, 'id');
-
-    if (empty($error)) {
-      $_SESSION['form'] = $form;
-
-      header('location: memos_update.php');
-      exit();
-    }
-  }
 ?>
 
 
@@ -83,7 +61,7 @@ while ($stmt->fetch()) :
     </header>
     <p class="form-title">詳細</p>
     <div class="form-content">
-      <form action="" method="post">
+      <form action=" memos_update.php" method="post">
         <div class="form-list">
           <div class="detail-picture">
             <?php if ($picture) : ?>
