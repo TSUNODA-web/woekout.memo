@@ -15,6 +15,9 @@ if (!$id) {
   header('Location: index.php');
   exit();
 }
+
+
+
 $db = dbconnect();
 $stmt = $db->prepare('select p.id, p.member_id, p.created, p.picture, p.weight, p.part, p.memo,m.id from posts p, members m where p.id=? and m.id=p.member_id');
 if (!$stmt) {
@@ -27,6 +30,13 @@ if (!$success) {
 }
 $stmt->bind_result($id, $member_id, $created, $picture, $weight, $part, $memo, $member_id);
 while ($stmt->fetch()) :
+
+  //確認ページから戻ってきた場合のデータの受け取り
+  if (isset($_POST["backbtn"])) {
+    $part    = $_POST['part'];
+    $weight    = $_POST['weight'];
+    $memo    = $_POST['memo'];
+  }
 
 ?>
 

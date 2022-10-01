@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (!$stmt) {
     die($db->error);
   }
-  $stmt->bind_param('ssi', $name, $email, $id);
+  $stmt->bind_param('ssi', $member['name'], $member['email'], $member['id']);
   $success = $stmt->execute();
   $db->commit();
   if (!$success) {
