@@ -7,6 +7,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   header('Location: login.php');
   exit();
 }
+//サニタイズ
 $member = array();
 if (!empty($_POST)) {
   foreach ($_POST as $key => $value) {
@@ -14,11 +15,43 @@ if (!empty($_POST)) {
   }
 }
 
+//エラーメッセージ
+$err = array();
 
-var_dump($member);
+//バリデーション
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $db = dbconnect();
-  $db->begin_transaction();
+  $member['name'] = filter_input(INPUT_POST, 'name');
+  if ($member['name'] === '') {
+    $err[] = '名前を入力してください';
+  } elseif (20 < mb_strlen($member['name'])) {
+    $err[] = "名前は20文字以内で入力してください。";
+  }
+  $member['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+  if ($member['email'] === '') {
+    $err[] = 'メールアドレスを入力してください';
+  } else {
+    $db = dbconnect();
+    $stmt = $db->prepare('select count(*) from members where email=? ');
+    if (!$stmt) {
+      die($db->error);
+    }
+    $stmt->bind_param('s', $member['email']);
+    $success = $stmt->execute();
+    if (!$success) {
+      die($db->error);
+    }
+
+    $stmt->bind_result($cnt);
+    $stmt->fetch();
+
+    if ($cnt > 0) {
+      $err[] = "指定されたメールアドレスはすでに登録されています";
+    }
+  }
+
+
+
+  /*$db->begin_transaction();
   $stmt = $db->prepare('UPDATE members SET name = ?,email =?,updated = CURRENT_TIMESTAMP WHERE members.id = ?;');
   if (!$stmt) {
     die($db->error);
@@ -33,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $_SESSION = array();
 
   // セッションを破棄
-  session_destroy();
+  session_destroy();*/
 }
 ?>
 
@@ -63,12 +96,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </ul>
   </header>
   <div class="form-title">フォーム</div>
-  <p class="thanks">更新が完了しました</p>
-  <p class="thanks">再度ログインしてください</p>
-
-  <div class="content">
-    <a href="login.php" class="button">ログイン</a>
-  </div>
+  <?php if (count($err) > 0) : ?>
+    <?php foreach ($err as $e) : ?>
+      <p class="thanks"><?php echo $e ?></p>
+    <?php endforeach ?>
+    <div class="form-content">
+      <form method="post" action="mypage.php?id=<?php echo $member['id']; ?>">
+        <input type="hidden" name="name" value="<?php echo $member['name'] ?>">
+        <input type="hidden" name="email" value="<?php echo $member['email'] ?>">
+        <input type="submit" name="backbtn" value="前のページへ戻る">
+      </form>
+    </div>
+  <?php else : ?>
+    <p class=" thanks">編集が完了しました</p>
+    <div class="content">
+      <a href="index.php" class="button">一覧へ</a>
+    </div>
+  <?php endif ?>
 
 </body>
 

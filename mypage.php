@@ -10,12 +10,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 
-$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-if (!$id) {
-  header('Location: index.php');
-  exit();
-}
 
+//確認ページから戻ってきた場合のデータの受け取り
+if (isset($_POST["backbtn"])) {
+  $name    = $_POST['name'];
+  $email    = $_POST['email'];
+}
 
 
 

@@ -15,7 +15,6 @@ if (!empty($_POST)) {
     $memos[$key] = h($value);
   }
 }
-var_dump($memos);
 //エラーメッセージ
 $err = array();
 
@@ -75,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
   <header>
-    <h1 class="headline"><a href="">筋トレメモ</a>
+    <h1 class="headline"><a href="index.php">筋トレメモ</a>
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
@@ -91,12 +90,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php foreach ($err as $e) : ?>
       <p class="thanks"><?php echo $e ?></p>
     <?php endforeach ?>
-    <form method="post" action="detail.php?id=<?php echo $memos['id']; ?>">
-      <input type="hidden" name="part" value="<?php echo $memos['part'] ?>">
-      <input type="hidden" name="weight" value="<?php echo $memos['weight'] ?>">
-      <input type="hidden" name="memo" value="<?php echo $memos['memo'] ?>">
-      <input type="submit" name="backbtn" value="前のページへ戻る">
-    </form>
+    <div class="form-content">
+      <form method="post" action="detail.php?id=<?php echo $memos['id']; ?>">
+        <input type="hidden" name="part" value="<?php echo $memos['part'] ?>">
+        <input type="hidden" name="weight" value="<?php echo $memos['weight'] ?>">
+        <input type="hidden" name="memo" value="<?php echo $memos['memo'] ?>">
+        <input type="submit" name="backbtn" value="前のページへ戻る">
+      </form>
+    </div>
   <?php else : ?>
     <p class=" thanks">編集が完了しました</p>
     <div class="content">
