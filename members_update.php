@@ -3,6 +3,7 @@ session_start();
 require('library.php');
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $id = $_SESSION['id'];
+  $email = $_SESSION['email'];
 } else {
   header('Location: login.php');
   exit();
@@ -44,29 +45,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_result($cnt);
     $stmt->fetch();
 
-    if ($cnt > 0) {
+    if ($cnt > 0 && $email === $member['email']) {
+      return $member['email'];
+    } else {
       $err[] = "指定されたメールアドレスはすでに登録されています";
     }
   }
+  var_dump($_SESSION['email'], $member['email']);
+  //アップデート処理
+  if (count($err) === 0) {
+    $db = dbconnect();
+    $db->begin_transaction();
+    $stmt = $db->prepare('update members SET name=?,email=? where id=?;');
 
+    if (!$stmt) {
+      die($db->error);
+    }
+    $stmt->bind_param('sss', $member['name'], $member['email'], $member['id']);
+    $success = $stmt->execute();
+    $db->commit();
 
-
-  /*$db->begin_transaction();
-  $stmt = $db->prepare('UPDATE members SET name = ?,email =?,updated = CURRENT_TIMESTAMP WHERE members.id = ?;');
-  if (!$stmt) {
-    die($db->error);
+    if (!$success) {
+      die($db->error);
+    }
   }
-  $stmt->bind_param('ssi', $member['name'], $member['email'], $member['id']);
-  $success = $stmt->execute();
-  $db->commit();
-  if (!$success) {
-    die($db->error);
-  }
-  // セッションの値を初期化
-  $_SESSION = array();
-
-  // セッションを破棄
-  session_destroy();*/
 }
 ?>
 
