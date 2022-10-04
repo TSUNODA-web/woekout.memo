@@ -30,6 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $member['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
   if ($member['email'] === '') {
     $err[] = 'メールアドレスを入力してください';
+  } elseif ($email == $member['email']) {
+    $email = $member['email'];
   } else {
     $db = dbconnect();
     $stmt = $db->prepare('select count(*) from members where email=? ');
@@ -45,13 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bind_result($cnt);
     $stmt->fetch();
 
-    if ($cnt > 0 && $email === $member['email']) {
-      return $member['email'];
-    } else {
+    if ($cnt > 0) {
       $err[] = "指定されたメールアドレスはすでに登録されています";
     }
   }
-  var_dump($_SESSION['email'], $member['email']);
+
   //アップデート処理
   if (count($err) === 0) {
     $db = dbconnect();
@@ -70,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <body>
   <header>
-    <h1 class="headline"><a href="">筋トレメモ</a>
+    <h1 class="headline"><a href="index.php">筋トレメモ</a>
     </h1>
     <ul class="nav-list">
       <li class="nav-list-item">
@@ -110,9 +111,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </form>
     </div>
   <?php else : ?>
-    <p class=" thanks">編集が完了しました</p>
+    <?php
+    //セッションを破棄し再度ログインしてもらう
+
+    $_SESSION = array();
+    session_destroy();
+    ?>
+    <p class=" thanks">編集が完了しました<br>再度ログインしてくだし</p>
     <div class="content">
-      <a href="index.php" class="button">一覧へ</a>
+      <a href="login.php" class="button">ログイン</a>
     </div>
   <?php endif ?>
 

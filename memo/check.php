@@ -10,7 +10,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 var_dump($form);
-/*if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect();
   $db->begin_transaction();
   $stmt = $db->prepare('insert into posts(member_id,weight,part,memo,picture) VALUES(?,?,?,?,?)');
@@ -26,7 +26,7 @@ var_dump($form);
   }
   unset($_SESSION['form']);
   header('Location:thanks.php');
-}*/
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
