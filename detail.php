@@ -30,7 +30,6 @@ if (!$success) {
 }
 $stmt->bind_result($id, $member_id, $created, $picture, $weight, $part, $memo, $member_id);
 while ($stmt->fetch()) :
-
   //確認ページから戻ってきた場合のデータの受け取り
   if (isset($_POST["backbtn"])) {
     $part    = $_POST['part'];
