@@ -44,13 +44,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   //メモの件数を取得
   $count = $db->prepare('select count(*) as cnt from posts WHERE member_id =?');
   $count->bind_param('i', $member_id);
-  $success = $count->execute();
-  if (!$success) {
-    die($db->error);
+  while ($row = $count->fetch()) {
+    echo $row;
   }
-  $count->get_result()->fetch_assoc();
-  $max_page = floor(($count['cnt'] + 1) / 8 + 1);
-  echo $max_page;
+  //$max_page = floor(($count['cnt'] + 1) / 8 + 1);
+  //echo $max_page;
+
   $stmt = $db->prepare('select p.id, p.member_id, p.created, p.part, p.picture from posts p where p.member_id=? order by p.id desc limit ?,8');
   if (!$stmt) {
     die($db->error);
