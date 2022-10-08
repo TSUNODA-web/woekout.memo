@@ -20,8 +20,14 @@ if (!$success) {
 }
 $stmt->bind_result($cnt);
 $stmt->fetch();
-
+$page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
+//変数に何も入ってこなければ１を代入
+$page = ($page ?: 1);
+$start = ($page - 1) * 8;
 $max_page = floor(($cnt + 1) / 8 + 1);
+if ($page > $max_page) {
+  header('Location:index.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -55,17 +61,10 @@ $max_page = floor(($cnt + 1) / 8 + 1);
   if (!$stmt) {
     die($db->error);
   }
-  $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
-  //変数に何も入ってこなければ１を代入
-  $page = ($page ?: 1);
-  $start = ($page - 1) * 8;
   $stmt->bind_param('ii', $member_id, $start);
   $result = $stmt->execute();
-  ?>
-  <?php if (!$result) : ?>
-    <p>表示するメモがありません</p>
-  <?php endif ?>
-  <?php $stmt->bind_result($id, $member_id, $created, $part, $picture);
+
+  $stmt->bind_result($id, $member_id, $created, $part, $picture);
   while ($stmt->fetch()) :
   ?>
     <div id="cards">
@@ -88,13 +87,14 @@ $max_page = floor(($cnt + 1) / 8 + 1);
   <div class="btn-area">
     <a href="memo/post.php?id=<?php echo h($member_id); ?>" class="button">メモする</a>
   </div>
-  <?php if ($page > 1) : ?>
-    <a href="index.php?page=<?php echo $page - 1; ?>"><?php echo $page - 1; ?>ページ目へ</a> |
-  <?php endif ?>
-  <?php if ($page < $max_page) : ?>
-    <a href="index.php?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目へ</a>
-  <?php endif ?>
-
+  <div class="pagination">
+    <?php if ($page > 1) : ?>
+      <a href="index.php?page=<?php echo $page - 1; ?>"><?php echo $page - 1; ?>ページ目へ</a> |
+    <?php endif ?>
+    <?php if ($page < $max_page) : ?>
+      <a href="index.php?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目へ</a>
+    <?php endif ?>
+  </div>
 
 
 
