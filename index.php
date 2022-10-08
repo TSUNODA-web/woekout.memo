@@ -10,9 +10,19 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 
+$db = dbconnect();
+//ログインしているユーザーのメモの件数を取得
+$stmt = $db->prepare('select count(*) as cnt from posts WHERE member_id =?');
+$stmt->bind_param('i', $member_id);
+$success = $stmt->execute();
+if (!$success) {
+  die($db->error);
+}
+$stmt->bind_result($cnt);
+$stmt->fetch();
 
+$max_page = floor(($cnt + 1) / 8 + 1);
 ?>
-
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -41,33 +51,23 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   </header>
   <?php
   $db = dbconnect();
-  //メモの件数を取得
-  $count = $db->prepare('select count(*) as cnt from posts WHERE member_id =?');
-  $count->bind_param('i', $member_id);
-  while ($row = $count->fetch()) {
-    echo $row;
-  }
-  //$max_page = floor(($count['cnt'] + 1) / 8 + 1);
-  //echo $max_page;
-
   $stmt = $db->prepare('select p.id, p.member_id, p.created, p.part, p.picture from posts p where p.member_id=? order by p.id desc limit ?,8');
   if (!$stmt) {
     die($db->error);
   }
   $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
+  //変数に何も入ってこなければ１を代入
   $page = ($page ?: 1);
   $start = ($page - 1) * 8;
   $stmt->bind_param('ii', $member_id, $start);
-  $success = $stmt->execute();
-  if (!$success) {
-    die($db->error);
-  }
-  $stmt->bind_result($id, $member_id, $created, $part, $picture);
+  $result = $stmt->execute();
+  ?>
+  <?php if (!$result) : ?>
+    <p>表示するメモがありません</p>
+  <?php endif ?>
+  <?php $stmt->bind_result($id, $member_id, $created, $part, $picture);
   while ($stmt->fetch()) :
   ?>
-    <?php if (!$success) : ?>
-      <p>表示するメモがありません</p>
-    <?php endif ?>
     <div id="cards">
       <div class="card">
         <?php if ($picture) : ?>
@@ -89,9 +89,12 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
     <a href="memo/post.php?id=<?php echo h($member_id); ?>" class="button">メモする</a>
   </div>
   <?php if ($page > 1) : ?>
-    <p><a href="index.php?page=<?php echo $page - 1; ?>"><?php echo $page - 1; ?>ページ目へ</a></p>
+    <a href="index.php?page=<?php echo $page - 1; ?>"><?php echo $page - 1; ?>ページ目へ</a> |
   <?php endif ?>
-  <p><a href="index.php?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目へ</a></p>
+  <?php if ($page < $max_page) : ?>
+    <a href="index.php?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目へ</a>
+  <?php endif ?>
+
 
 
 

@@ -120,12 +120,12 @@ button {
 
 #cards {
   display: inline-block;
-  margin-left: 40px;
+  margin-left: 10px;
   margin-top: 10px
 }
 
 .card {
-  width: 370px;
+  width: 400px;
   height: 315px;
   border: 1px solid lightgray;
 }
