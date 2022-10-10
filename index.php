@@ -10,21 +10,18 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 
-$db = dbconnect();
+$db = db();
 //ログインしているユーザーのメモの件数を取得
-$stmt = $db->prepare('select count(*) as cnt from posts WHERE member_id =?');
-$stmt->bind_param('i', $member_id);
-$success = $stmt->execute();
-if (!$success) {
-  die($db->error);
-}
-$stmt->bind_result($cnt);
-$stmt->fetch();
+$stmt = $db->prepare('select count(*) as cnt from posts WHERE member_id =:member_id');
+$stmt->bindValue(':member_id', (int)$member_id, PDO::PARAM_INT);
+$stmt->execute();
+$result = $stmt->fetch();
+var_dump($result);
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
 //変数に何も入ってこなければ１を代入
 $page = ($page ?: 1);
 $start = ($page - 1) * 8;
-$max_page = floor(($cnt + 1) / 8 + 1);
+$max_page = floor(($result['cnt'] + 1) / 8 + 1);
 if ($page > $max_page) {
   header('Location:index.php');
 }
@@ -56,36 +53,34 @@ if ($page > $max_page) {
     </ul>
   </header>
   <?php
-  $db = dbconnect();
-  $stmt = $db->prepare('select p.id, p.member_id, p.created, p.part, p.picture from posts p where p.member_id=? order by p.id desc limit ?,8');
-  if (!$stmt) {
-    die($db->error);
-  }
-  $stmt->bind_param('ii', $member_id, $start);
-  $result = $stmt->execute();
-
-  $stmt->bind_result($id, $member_id, $created, $part, $picture);
-  while ($stmt->fetch()) :
+  $db = db();
+  $stmt = $db->prepare('select p.id, p.member_id, p.created, p.part, p.picture from posts p where p.member_id=:member_id order by p.id desc limit :start,8');
+  $stmt->bindValue(':member_id', (int)$member_id, PDO::PARAM_INT);
+  $stmt->bindValue(':start', (int)$start, PDO::PARAM_INT);
+  $stmt->execute();
+  $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   ?>
+
+  <?php foreach ($result as $memo) { ?>
     <div id="cards">
       <div class="card">
-        <?php if ($picture) : ?>
-          <div class="picture"><a href="detail.php?id=<?php echo h($id); ?>"><img src="picture/<?php echo h($picture); ?>"></a>
+        <?php if ($memo['picture']) : ?>
+          <div class="picture"><a href="detail.php?id=<?php echo $memo['id']; ?>"><img src="picture/<?php echo $memo['picture']; ?>"></a>
           <?php else : ?>
-            <div class="picture"><a href="detail.php?id=<?php echo h($id); ?>"><img src="empty_image/20200501_noimage.jpg"></a>
+            <div class="picture"><a href="detail.php?id=<?php echo $memo['id']; ?>"><img src="empty_image/20200501_noimage.jpg"></a>
             </div>
           <?php endif; ?>
           <div class="description">
-            <p>[部位]<?php echo h($part); ?></p>
+            <p>[部位]<?php echo $memo['part']; ?></p>
             <br>
-            <p class="day">[投稿日]<?php echo h($created); ?></p>
+            <p class="day">[投稿日]<?php echo $memo['created']; ?></p>
           </div>
           </div>
       </div>
     </div>
-  <?php endwhile; ?>
+  <?php } ?>
   <div class="btn-area">
-    <a href="memo/post.php?id=<?php echo h($member_id); ?>" class="button">メモする</a>
+    <a href="memo/post.php?id=<?php echo $memo['member_id']; ?>" class="button">メモする</a>
   </div>
   <div class="pagination">
     <?php if ($page > 1) : ?>

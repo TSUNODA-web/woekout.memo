@@ -20,7 +20,7 @@ try {
 $member_id = 5;
 $db = db();
 $stmt = $db->prepare('select * from posts WHERE member_id =:id');
-$stmt->bindValue(':id', $member_id, PDO::PARAM_INT);
+$stmt->bindValue(':id', (int)$member_id, PDO::PARAM_INT);
 $stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 var_dump($result);

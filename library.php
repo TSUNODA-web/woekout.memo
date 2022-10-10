@@ -21,7 +21,7 @@ function db()
   $user = 'makojin';
   $password = 'Tunomako2110';
   try {
-    $dbh = new PDO($dsn, $user, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+    $dbh = new PDO($dsn, $user, $password, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_EMULATE_PREPARES => false]);
   } catch (PDOException $e) {
     echo '接続失敗' . $e->getMessage();
     exit();
