@@ -33,41 +33,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif ($email == $member['email']) {
     $email = $member['email'];
   } else {
-    $db = dbconnect();
-    $stmt = $db->prepare('select count(*) from members where email=? ');
-    if (!$stmt) {
-      die($db->error);
-    }
-    $stmt->bind_param('s', $member['email']);
-    $success = $stmt->execute();
-    if (!$success) {
-      die($db->error);
-    }
+    $db = db();
+    $stmt = $db->prepare('select count(*) as cnt from members where email=:email ');
+    $stmt->bindValue(':email', $member['email'], PDO::PARAM_STR);
+    $stmt->execute();
+    $result = $stmt->fetch();
 
-    $stmt->bind_result($cnt);
-    $stmt->fetch();
-
-    if ($cnt > 0) {
+    if ($result['cnt'] > 0) {
       $err[] = "指定されたメールアドレスはすでに登録されています";
     }
   }
 
   //アップデート処理
   if (count($err) === 0) {
-    $db = dbconnect();
-    $db->begin_transaction();
-    $stmt = $db->prepare('update members SET name=?,email=? where id=?;');
+    $db = db();
+    $stmt = $db->prepare('update members SET name=:name,email=:email where id=:member_id;');
 
-    if (!$stmt) {
-      die($db->error);
-    }
-    $stmt->bind_param('sss', $member['name'], $member['email'], $member['id']);
-    $success = $stmt->execute();
-    $db->commit();
-
-    if (!$success) {
-      die($db->error);
-    }
+    $stmt->bindValue(':name', $member['name'], PDO::PARAM_STR);
+    $stmt->bindValue(':email', $member['email'], PDO::PARAM_STR);
+    $stmt->bindValue(':member_id', (int)$member['id'], PDO::PARAM_INT);
+    $stmt->execute();
   }
 }
 

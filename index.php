@@ -16,7 +16,6 @@ $stmt = $db->prepare('select count(*) as cnt from posts WHERE member_id =:member
 $stmt->bindValue(':member_id', (int)$member_id, PDO::PARAM_INT);
 $stmt->execute();
 $result = $stmt->fetch();
-var_dump($result);
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
 //変数に何も入ってこなければ１を代入
 $page = ($page ?: 1);

@@ -39,21 +39,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   //アップデート処理
   if (count($err) === 0) {
-    $db = dbconnect();
-    $db->begin_transaction();
-    $stmt = $db->prepare('update posts SET part=?,weight=?,memo=? where id=?;');
+    $db = db();
+    $stmt = $db->prepare('update posts SET part=:part,weight=:weight,memo=:memo where id=:id;');
 
-    if (!$stmt) {
-      die($db->error);
-    }
 
-    $stmt->bind_param('sssi', $memos['part'], $memos['weight'], $memos['memo'], $memos['id']);
-    $success = $stmt->execute();
-    $db->commit();
-
-    if (!$success) {
-      die($db->error);
-    }
+    $stmt->bindValue(':part', $memos['part'], PDO::PARAM_STR);
+    $stmt->bindValue(':weight', (int)$memos['weight'], PDO::PARAM_INT);
+    $stmt->bindValue(':memo', $memos['memo'], PDO::PARAM_STR);
+    $stmt->bindValue(':id', (int)$memos['id'], PDO::PARAM_INT);
+    $stmt->execute();
   }
 }
 ?>
