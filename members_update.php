@@ -47,12 +47,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   //アップデート処理
   if (count($err) === 0) {
     $db = db();
-    $stmt = $db->prepare('update members SET name=:name,email=:email where id=:member_id;');
+    $db->beginTransaction();
+    try {
+      $stmt = $db->prepare('update members SET name=:name,email=:email where id=:member_id;');
 
-    $stmt->bindValue(':name', $member['name'], PDO::PARAM_STR);
-    $stmt->bindValue(':email', $member['email'], PDO::PARAM_STR);
-    $stmt->bindValue(':member_id', (int)$member['id'], PDO::PARAM_INT);
-    $stmt->execute();
+      $stmt->bindValue(':name', $member['name'], PDO::PARAM_STR);
+      $stmt->bindValue(':email', $member['email'], PDO::PARAM_STR);
+      $stmt->bindValue(':member_id', (int)$member['id'], PDO::PARAM_INT);
+      $stmt->execute();
+      $db->commit();
+    } catch (PDOException $e) {
+      $db->rollBack();
+      exit($e);
+    }
   }
 }
 

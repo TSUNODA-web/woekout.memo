@@ -40,14 +40,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   //アップデート処理
   if (count($err) === 0) {
     $db = db();
-    $stmt = $db->prepare('update posts SET part=:part,weight=:weight,memo=:memo where id=:id;');
+    $db->beginTransaction();
+    try {
+      $stmt = $db->prepare('update posts SET part=:part,weight=:weight,memo=:memo where id=:id;');
 
-
-    $stmt->bindValue(':part', $memos['part'], PDO::PARAM_STR);
-    $stmt->bindValue(':weight', (int)$memos['weight'], PDO::PARAM_INT);
-    $stmt->bindValue(':memo', $memos['memo'], PDO::PARAM_STR);
-    $stmt->bindValue(':id', (int)$memos['id'], PDO::PARAM_INT);
-    $stmt->execute();
+      $stmt->bindValue(':part', $memos['part'], PDO::PARAM_STR);
+      $stmt->bindValue(':weight', (int)$memos['weight'], PDO::PARAM_INT);
+      $stmt->bindValue(':memo', $memos['memo'], PDO::PARAM_STR);
+      $stmt->bindValue(':id', (int)$memos['id'], PDO::PARAM_INT);
+      $stmt->execute();
+      $db->commit();
+    } catch (PDOException $e) {
+      $db->rollBack();
+      exit($e);
+    }
   }
 }
 ?>
