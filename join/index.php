@@ -19,6 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $form['name'] = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
   if ($form['name'] === '') {
     $error['name'] = 'blank';
+  } elseif (20 < mb_strlen($form['name'])) {
+    $error['name'] = 'length';
   }
 
   $form['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -26,20 +28,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error['email'] = 'blank';
   } else {
     $db = dbconnect();
-    $stmt = $db->prepare('select count(*) from members where email=? ');
-    if (!$stmt) {
-      die($db->error);
-    }
-    $stmt->bind_param('s', $form['email']);
-    $success = $stmt->execute();
-    if (!$success) {
-      die($db->error);
-    }
+    $stmt = $db->prepare('select count(*) as cnt from members where email=:email ');
+    $stmt->bindValue(':email', $form['email'], PDO::PARAM_STR);
+    $stmt->execute();
+    $result = $stmt->fetch();
 
-    $stmt->bind_result($cnt);
-    $stmt->fetch();
-
-    if ($cnt > 0) {
+    if ($result['cnt'] > 0) {
       $error['email'] = 'duplicate';
     }
   }
@@ -84,6 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input name="name" type="text" value="<?php echo h($form['name']); ?>">
         <?php if (isset($error['name']) && $error['name'] === 'blank') :  ?>
           <p class="error">＊名前を入力してください</p>
+        <?php endif; ?>
+        <?php if (isset($error['name']) && $error['name'] === 'length') : ?>
+          <p class="error">＊名前は20文字以内で入力してください</p>
         <?php endif; ?>
       </div>
       <div class="form-list">

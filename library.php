@@ -6,16 +6,16 @@ function h($value)
 }
 
 /*データベースの接続*/
-function dbconnect()
+/*function dbconnect()
 {
   $db = new mysqli('localhost', 'root', 'root', 'workout_memo');
   if (!$db) {
     die($db->error);
   }
   return $db;
-}
+}*/
 
-function db()
+function dbconnect()
 {
   $dsn = ('mysql:dbname=workout_memo;localhost;charset=UTF8');
   $user = 'makojin';

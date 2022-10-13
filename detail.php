@@ -18,7 +18,7 @@ if (!$id) {
 
 
 
-$db = db();
+$db = dbconnect();
 $stmt = $db->prepare('select p.id, p.member_id, p.picture, p.weight, p.part, p.memo,m.id from posts p, members m where p.id=:id and m.id=p.member_id');
 $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
 $stmt->execute();

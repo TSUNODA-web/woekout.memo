@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif ($email == $member['email']) {
     $email = $member['email'];
   } else {
-    $db = db();
+    $db = dbconnect();
     $stmt = $db->prepare('select count(*) as cnt from members where email=:email ');
     $stmt->bindValue(':email', $member['email'], PDO::PARAM_STR);
     $stmt->execute();
@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   //アップデート処理
   if (count($err) === 0) {
-    $db = db();
+    $db = dbconnect();
     $db->beginTransaction();
     try {
       $stmt = $db->prepare('update members SET name=:name,email=:email where id=:member_id;');

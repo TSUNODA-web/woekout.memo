@@ -14,25 +14,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } else {
     //ログインチェック
     $db = dbconnect();
-    $stmt = $db->prepare('select id,name,password from members where email=? limit 1');
-    if (!$stmt) {
-      die($db->error);
-    }
+    $db->beginTransaction();
 
-    $stmt->bind_param('s', $email);
-    $success = $stmt->execute();
-    if (!$success) {
-      die($db->error);
-    }
+    $stmt = $db->prepare('select id,name,password from members where email=:email');
 
-    $stmt->bind_result($id, $name, $hash);
-    $stmt->fetch();
+    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+    $stmt->execute();
+    $result = $stmt->fetch();
 
-    if (password_verify($password, $hash)) {
+    $stmt->execute();
+    $result = $stmt->fetch();
+
+
+    if (password_verify($password, $result['password'])) {
       //成功
       session_regenerate_id();
-      $_SESSION['id'] = $id;
-      $_SESSION['name'] = $name;
+      $_SESSION['id'] = $result['id'];
+      $_SESSION['name'] = $result['name'];
       $_SESSION['email'] = $email;
 
       header('Location: index.php');
@@ -80,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>パスワード</label>
         <input name="password" type="password" value="<?php echo h($password); ?>">
         <?php if (isset($error['login']) && $error['login'] === 'faild') : ?>
-          <p class="error">＊ログインに失敗しました。正しくご記入ください。</p>
+          <p class="error">＊メールアドレスまたはパスワードが一致しません。</p>
         <?php endif; ?>
       </div>
       <div class="btn-area">

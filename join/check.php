@@ -11,19 +11,23 @@ if (isset($_SESSION['form'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect();
-  $stmt = $db->prepare('insert into members (name,email,password) VALUES(?,?,?)');
-  if (!$stmt) {
-    die($db->error);
-  }
-  $password = password_hash($form['password'], PASSWORD_DEFAULT);
-  $stmt->bind_param('sss', $form['name'], $form['email'], $password);
-  $success = $stmt->execute();
-  if (!$success) {
-    die($db->error);
-  }
+  $db->beginTransaction();
+  try {
+    $stmt = $db->prepare('insert into members (name,email,password) VALUES(?,?,?)');
+    $password = password_hash($form['password'], PASSWORD_DEFAULT);
+    $stmt->bindValue('1', $form['name'], PDO::PARAM_STR);
+    $stmt->bindValue('2', $form['email'], PDO::PARAM_STR);
+    $stmt->bindValue('3', $password, PDO::PARAM_STR);
 
-  unset($_SESSION['form']);
-  header('Location:thanks.php');
+    $stmt->execute();
+    $db->commit();
+
+    unset($_SESSION['form']);
+    header('Location:thanks.php');
+  } catch (PDOException $e) {
+    $db->rollBack();
+    exit($e);
+  }
 }
 ?>
 
