@@ -14,29 +14,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } else {
     //ログインチェック
     $db = dbconnect();
-    $db->beginTransaction();
+    try {
+      $stmt = $db->prepare('select id,name,password from members where email=:email');
+      $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+      $stmt->execute();
+      $result = $stmt->fetch();
 
-    $stmt = $db->prepare('select id,name,password from members where email=:email');
+      $stmt->execute();
+      $result = $stmt->fetch();
 
-    $stmt->bindValue(':email', $email, PDO::PARAM_STR);
-    $stmt->execute();
-    $result = $stmt->fetch();
+      if (password_verify($password, $result['password'])) {
+        //成功
+        session_regenerate_id();
+        $_SESSION['id'] = $result['id'];
+        $_SESSION['name'] = $result['name'];
+        $_SESSION['email'] = $email;
 
-    $stmt->execute();
-    $result = $stmt->fetch();
-
-
-    if (password_verify($password, $result['password'])) {
-      //成功
-      session_regenerate_id();
-      $_SESSION['id'] = $result['id'];
-      $_SESSION['name'] = $result['name'];
-      $_SESSION['email'] = $email;
-
-      header('Location: index.php');
-      exit();
-    } else {
-      $error[('login')] = 'faild';
+        header('Location: index.php');
+        exit();
+      } else {
+        $error[('login')] = 'faild';
+      }
+    } catch (PDOException $e) {
+      $db->rollBack();
+      exit($e);
     }
   }
 }

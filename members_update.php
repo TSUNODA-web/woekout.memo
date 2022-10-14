@@ -34,13 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $member['email'];
   } else {
     $db = dbconnect();
-    $stmt = $db->prepare('select count(*) as cnt from members where email=:email ');
-    $stmt->bindValue(':email', $member['email'], PDO::PARAM_STR);
-    $stmt->execute();
-    $result = $stmt->fetch();
-
-    if ($result['cnt'] > 0) {
-      $err[] = "指定されたメールアドレスはすでに登録されています";
+    try {
+      $stmt = $db->prepare('select count(*) as cnt from members where email=:email ');
+      $stmt->bindValue(':email', $member['email'], PDO::PARAM_STR);
+      $stmt->execute();
+      $result = $stmt->fetch();
+      if ($result['cnt'] > 0) {
+        $err[] = "指定されたメールアドレスはすでに登録されています";
+      }
+    } catch (PDOException $e) {
+      $db->rollBack();
+      exit($e);
     }
   }
 

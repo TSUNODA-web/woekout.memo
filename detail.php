@@ -19,14 +19,19 @@ if (!$id) {
 
 
 $db = dbconnect();
-$stmt = $db->prepare('select p.id, p.member_id, p.picture, p.weight, p.part, p.memo,m.id from posts p, members m where p.id=:id and m.id=p.member_id');
-$stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
-$stmt->execute();
-$result = $stmt->fetch();
-$part = $result['part'];
-$weight = $result['weight'];
-$memo = $result['memo'];
-$picture = $result['picture'];
+try {
+  $stmt = $db->prepare('select p.id, p.member_id, p.picture, p.weight, p.part, p.memo,m.id from posts p, members m where p.id=:id and m.id=p.member_id');
+  $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+  $stmt->execute();
+  $result = $stmt->fetch();
+  $part = $result['part'];
+  $weight = $result['weight'];
+  $memo = $result['memo'];
+  $picture = $result['picture'];
+} catch (PDOException $e) {
+  $db->rollBack();
+  exit($e);
+}
 
 //確認ページから戻ってきた場合のデータの受け取り
 if (isset($_POST["backbtn"])) {

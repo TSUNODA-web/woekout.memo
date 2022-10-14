@@ -12,18 +12,26 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
 
 $db = dbconnect();
 //ログインしているユーザーのメモの件数を取得
-$stmt = $db->prepare('select count(*) as cnt from posts WHERE member_id =:member_id');
-$stmt->bindValue(':member_id', (int)$member_id, PDO::PARAM_INT);
-$stmt->execute();
-$result = $stmt->fetch();
-$page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
+try {
+  $stmt = $db->prepare('select count(*) as cnt from posts WHERE member_id =:member_id');
+  $stmt->bindValue(':member_id', (int)$member_id, PDO::PARAM_INT);
+  $stmt->execute();
+  $result = $stmt->fetch();
+} catch (PDOException $_e) {
+  $db->rollBack();
+  exit($e);
+}
 //変数に何も入ってこなければ１を代入
+$page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
 $page = ($page ?: 1);
 $start = ($page - 1) * 8;
 $max_page = floor(($result['cnt'] + 1) / 8 + 1);
+
+
 if ($page > $max_page) {
   header('Location:index.php');
 }
+
 ?>
 
 <!DOCTYPE html>

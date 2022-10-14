@@ -28,29 +28,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error['email'] = 'blank';
   } else {
     $db = dbconnect();
-    $stmt = $db->prepare('select count(*) as cnt from members where email=:email ');
-    $stmt->bindValue(':email', $form['email'], PDO::PARAM_STR);
-    $stmt->execute();
-    $result = $stmt->fetch();
+    try {
+      $stmt = $db->prepare('select count(*) as cnt from members where email=:email ');
+      $stmt->bindValue(':email', $form['email'], PDO::PARAM_STR);
+      $stmt->execute();
+      $result = $stmt->fetch();
 
-    if ($result['cnt'] > 0) {
-      $error['email'] = 'duplicate';
+      if ($result['cnt'] > 0) {
+        $error['email'] = 'duplicate';
+      }
+    } catch (PDOException $e) {
+      $db->rollBack();
+      exit($e);
     }
   }
-
-  $form['password'] = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-  if ($form['password'] === '') {
-    $error['password'] = 'blank';
-  } elseif (strlen($form['password']) < 8) {
-    $error['password'] = 'length';
-  }
-
-  if (empty($error)) {
-    $_SESSION['form'] = $form;
-    header('Location: check.php');
-    exit();
-  }
 }
+
+$form['password'] = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+if ($form['password'] === '') {
+  $error['password'] = 'blank';
+} elseif (strlen($form['password']) < 8) {
+  $error['password'] = 'length';
+}
+
+if (empty($error)) {
+  $_SESSION['form'] = $form;
+  header('Location: check.php');
+  exit();
+}
+
 
 
 ?>
