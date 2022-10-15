@@ -8,39 +8,27 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 $db = dbconnect();
-$stmt = $db->prepare('select count(*) from members where password=? ');
-if (!$stmt) {
-  die($db->error);
-}
-$stmt->bind_param('s', $form['password']);
-$success = $stmt->execute();
-if (!$success) {
-  die($db->error);
-}
-$stmt->bind_param('s', $form['password']);
-$success = $stmt->execute();
-if (!$success) {
-  die($db->error);
-}
-$stmt->bind_result($cnt);
-$stmt->fetch();
+$stmt = $db->prepare('select password from members where id=:id');
+$stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+$stmt->execute();
+$result = $stmt->fetch();
 
-if ($cnt > 0) {
-  $error['password'] = 'duplicate';
+if (password_verify($password, $result['password'])) {
+  $db->beginTransaction();
+  try {
+    $stmt = $db->prepare('update members SET password where id=:id;');
+    $password = password_hash($form['password'], PASSWORD_DEFAULT);
+    $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+    $stmt->execute();
+    $db->commit();
+  } catch (PDOException $e) {
+    $db->rollBack();
+    exit($e);
+  }
 }
 
 
-$form['password'] = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-if ($form['password'] === '') {
-  $error['password'] = 'blank';
-} elseif (strlen($form['password']) < 8) {
-  $error['password'] = 'length';
-}
-if (empty($error)) {
-  $_SESSION['form'] = $form;
-  header('Location: thanks.php');
-  exit();
-}
+
 
 ?>
 
