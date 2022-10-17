@@ -31,24 +31,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $db->rollBack();
       exit($e);
     }
-    if (password_verify($form['password'], $result['password'])) {
-    } else {
+    if (!password_verify($form['password'], $result['password'])) {
       $error[('password')] = 'faild';
     }
   }
   $form['new_password'] = filter_input(INPUT_POST, 'new_password');
-  if ($form['password'] === '') {
-    $error['password'] = 'blank';
-  } elseif (strlen($form['password']) < 8) {
-    $error['password'] = 'length';
+  if ($form['new_password'] === '') {
+    $error['new_password'] = 'blank';
+  } elseif (strlen($form['new_password']) < 8) {
+    $error['new_password'] = 'length';
+  }
+  $form['confirm_password'] = filter_input(INPUT_POST, 'confirm_password');
+  if ($form['confirm_password'] === '') {
+    $error['confirm_password'] = 'blank';
+  } elseif ($form['new_password'] !== $form['confirm_password']) {
+    $error['confirm_password'] = 'faild';
   }
 }
+var_dump($form['new_password'], $form['confirm_password']);
 
-if (empty($error)) {
+/*if (empty($error)) {
   $_SESSION['form'] = $form;
   header('Location: password_update.php');
   exit();
-}
+}*/
 
 
 ?>
@@ -96,10 +102,10 @@ if (empty($error)) {
       <div class="form-list">
         <label>新しいパスワード</label>
         <input name="new_password" type="password" value="">
-        <?php if (isset($error['password']) && $error['password'] === 'blank') : ?>
+        <?php if (isset($error['new_password']) && $error['new_password'] === 'blank') : ?>
           <p class="error">＊パスワードを入力してください</p>
         <?php endif; ?>
-        <?php if (isset($error['password']) && $error['password'] === 'length') : ?>
+        <?php if (isset($error['new_password']) && $error['new_password'] === 'length') : ?>
           <p class="error">＊パスワードは8文字以上で入力してください</p>
         <?php endif; ?>
 
@@ -108,6 +114,13 @@ if (empty($error)) {
       <div class="form-list">
         <label>確認</label>
         <input name="confirm_password" type="password" value="">
+        <?php if (isset($error['confirm_password']) && $error['confirm_password'] === 'blank') : ?>
+          <p class="error">＊パスワードを入力してください</p>
+        <?php endif; ?>
+        <?php if (isset($error['confirm_password_password']) && $error['confirm_password'] === 'faild') : ?>
+          <p class="error">＊パスワードが一致しません</p>
+        <?php endif; ?>
+
       </div>
       <div class="btn-area">
         <input type="submit" name="" value="変更する">
