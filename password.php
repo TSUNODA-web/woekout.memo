@@ -7,15 +7,17 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   header('Location: login.php');
   exit();
 }
+
+//変数の初期化
 $form = [
   'password' => '',
   'new_password' => '',
   'confirm_password' => ''
 
 ];
-
 $error = [];
 
+//バリデーション
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $form['password'] = filter_input(INPUT_POST, 'password');
   if ($form['password'] === '') {
@@ -47,15 +49,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif ($form['new_password'] !== $form['confirm_password']) {
     $error['confirm_password'] = 'faild';
   }
+
+  if (empty($error)) {
+    $_SESSION['new_password'] = $form['new_password'];
+    header('Location: password_update.php');
+    exit();
+  }
 }
-var_dump($form['new_password'], $form['confirm_password']);
-
-/*if (empty($error)) {
-  $_SESSION['form'] = $form;
-  header('Location: password_update.php');
-  exit();
-}*/
-
 
 ?>
 
@@ -108,8 +108,6 @@ var_dump($form['new_password'], $form['confirm_password']);
         <?php if (isset($error['new_password']) && $error['new_password'] === 'length') : ?>
           <p class="error">＊パスワードは8文字以上で入力してください</p>
         <?php endif; ?>
-
-
       </div>
       <div class="form-list">
         <label>確認</label>
@@ -117,10 +115,9 @@ var_dump($form['new_password'], $form['confirm_password']);
         <?php if (isset($error['confirm_password']) && $error['confirm_password'] === 'blank') : ?>
           <p class="error">＊パスワードを入力してください</p>
         <?php endif; ?>
-        <?php if (isset($error['confirm_password_password']) && $error['confirm_password'] === 'faild') : ?>
+        <?php if (isset($error['confirm_password']) && $error['confirm_password'] === 'faild') : ?>
           <p class="error">＊パスワードが一致しません</p>
         <?php endif; ?>
-
       </div>
       <div class="btn-area">
         <input type="submit" name="" value="変更する">

@@ -8,26 +8,17 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 
-/*if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $form['password'] = filter_input(INPUT_POST, 'password');
 
-}
+$password = ($_SESSION['new_password']);
 
-
-$password = $_POST;
-
-$db = dbconnect();
-$stmt = $db->prepare('select password from members where id=:id');
-$stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
-$stmt->execute();
-$result = $stmt->fetch();
-
-if (password_verify($password, $result['password'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $db = dbconnect();
   $db->beginTransaction();
   try {
-    $stmt = $db->prepare('update members SET password where id=:id;');
-    $password = password_hash($form['password'], PASSWORD_DEFAULT);
+    $stmt = $db->prepare('update members SET password=:password where id=:id;');
+    $password = password_hash($_SESSION['new_password'], PASSWORD_DEFAULT);
     $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+    $stmt->bindValue(':password', $password, PDO::PARAM_STR);
     $stmt->execute();
     $db->commit();
   } catch (PDOException $e) {
@@ -36,8 +27,6 @@ if (password_verify($password, $result['password'])) {
   }
 }
 
-$_SESSION = array();
-session_destroy();*/
 ?>
 
 
