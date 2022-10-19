@@ -1,31 +1,30 @@
 <?php
 session_start();
 require('library.php');
-if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
-  $id = $_SESSION['id'];
-} else {
+if (!isset($_SESSION['id']) && isset($_SESSION['name'])) {
   header('Location: login.php');
   exit();
 }
 
 
-$password = ($_SESSION['new_password']);
+$form = $_SESSION['form'];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $db = dbconnect();
-  $db->beginTransaction();
-  try {
-    $stmt = $db->prepare('update members SET password=:password where id=:id;');
-    $password = password_hash($_SESSION['new_password'], PASSWORD_DEFAULT);
-    $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
-    $stmt->bindValue(':password', $password, PDO::PARAM_STR);
-    $stmt->execute();
-    $db->commit();
-  } catch (PDOException $e) {
-    $db->rollBack();
-    exit($e);
-  }
+$db = dbconnect();
+$db->beginTransaction();
+try {
+  $stmt = $db->prepare('update members SET password=:password where id=:id;');
+  $password = password_hash($form['new_password'], PASSWORD_DEFAULT);
+  $id = $form['id'];
+  $stmt->bindValue(':password', $password, PDO::PARAM_STR);
+  $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+  $stmt->execute();
+  $db->commit();
+} catch (PDOException $e) {
+  $db->rollBack();
+  exit($e);
 }
+$_SESSION = array();
+session_destroy();
 
 ?>
 
@@ -38,17 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="reset.css" />
+  <link rel="stylesheet" href="style.css" />
+
   <title>Document</title>
 </head>
 
 <body>
-  <?php
-  //セッションを破棄し再度ログインしてもらう
-
-  //$_SESSION = array();
-  //session_destroy();
-  ?>
-  <p class=" thanks">編集が完了しました<br>再度ログインしてくだし</p>
+  <p class=" thanks">編集が完了しました<br>再度ログインしてください</p>
   <div class="content">
     <a href="login.php" class="button">ログイン</a>
   </div>

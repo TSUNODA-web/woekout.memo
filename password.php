@@ -50,8 +50,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error['confirm_password'] = 'faild';
   }
 
+  $form['id'] = filter_input(INPUT_POST, 'id');
+
   if (empty($error)) {
-    $_SESSION['new_password'] = $form['new_password'];
+    $_SESSION['form'] = $form;
     header('Location: password_update.php');
     exit();
   }
@@ -97,7 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (isset($error['password']) && $error['password'] === 'faild') : ?>
           <p class="error">＊パスワードが一致しません</p>
         <?php endif; ?>
-
       </div>
       <div class="form-list">
         <label>新しいパスワード</label>
@@ -119,15 +120,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <p class="error">＊パスワードが一致しません</p>
         <?php endif; ?>
       </div>
+      <div>
+        <input type="hidden" name="id" value="<?php echo $id; ?>">
+      </div>
       <div class="btn-area">
         <input type="submit" name="" value="変更する">
       </div>
+    </form>
   </div>
-
-  </form>
-  </div>
-
-
 </body>
 
 </html>
