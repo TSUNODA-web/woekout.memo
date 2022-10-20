@@ -185,3 +185,20 @@ input[type="file"] {
   color: black;
   text-decoration: none;
 }
+
+@media screen and (max-width: 599px) {
+  label {
+    float: none;
+    border-left: none;
+  }
+
+  input {
+    width: 100%;
+  }
+
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
