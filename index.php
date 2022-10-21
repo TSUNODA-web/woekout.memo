@@ -48,16 +48,17 @@ if ($page > $max_page) {
 </head>
 
 <body>
-  <header>
-    <h1><a href="index.php">筋トレメモ</a></h1>
-    <ul class="nav-list">
-      <li class="nav-list-item">
-        <a href="mypage.php?id=<?php echo h($member_id); ?>">マイページ</a>
-      </li>
-      <li class="nav-list-item">
-        <a href="logout.php">ログアウト</a>
-      </li>
-    </ul>
+  <header id="header">
+    <div class="wrapper">
+      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+      <nav>
+        <ul>
+          <li><a href="memo/post.php?id=<?php echo $member_id; ?>">メモする</a></li>
+          <li><a href="mypage.php?id=<?php echo ($member_id); ?>">マイページ</a></li>
+          <li><a href="logout.php">ログアウト</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
   <?php
   $db = dbconnect();
@@ -87,16 +88,14 @@ if ($page > $max_page) {
     </div>
   <?php } ?>
   <div class="btn-area">
-    <a href="memo/post.php?id=<?php echo $memo['member_id']; ?>" class="button">メモする</a>
-  </div>
-  <div class="pagination">
-    <?php if ($page > 1) : ?>
-      <a href="index.php?page=<?php echo $page - 1; ?>"><?php echo $page - 1; ?>ページ目へ</a> |
-    <?php endif ?>
-    <?php if ($page < $max_page) : ?>
-      <a href="index.php?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目へ</a>
-    <?php endif ?>
-  </div>
+    <div class="pagination">
+      <?php if ($page > 1) : ?>
+        <a href="index.php?page=<?php echo $page - 1; ?>"><?php echo $page - 1; ?>ページ目へ</a> |
+      <?php endif ?>
+      <?php if ($page < $max_page) : ?>
+        <a href="index.php?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目へ</a>
+      <?php endif ?>
+    </div>
 
 
 

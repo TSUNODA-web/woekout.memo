@@ -60,16 +60,17 @@ if (isset($_POST["backbtn"])) {
 
 
 <body>
-  <header>
-    <h1><a href="index.php">筋トレメモ</a></h1>
-    <ul class="nav-list">
-      <li class="nav-list-item">
-        <a href=" mypage.php">マイページ</a>
-      </li>
-      <li class="nav-list-item">
-        <a href="logout.php<?php echo h($member_id); ?>">ログアウト</a>
-      </li>
-    </ul>
+  <header id="header">
+    <div class="wrapper">
+      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+      <nav>
+        <ul>
+          <li><a href="memo/post.php?id=<?php echo $member_id; ?>">メモする</a></li>
+          <li><a href="mypage.php?id=<?php echo ($member_id); ?>">マイページ</a></li>
+          <li><a href="logout.php">ログアウト</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
   <p class="form-title">詳細</p>
   <div class="form-content">

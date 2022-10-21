@@ -73,8 +73,10 @@ if (empty($error)) {
 </head>
 
 <body>
-  <header>
-    <h1><a href="">筋トレメモ</a></h1>
+  <header id="header">
+    <div class="wrapper">
+      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+    </div>
   </header>
   <p class="form-title">会員登録フォーム</p>
   <div class="form-content">

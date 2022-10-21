@@ -22,17 +22,17 @@ if (isset($_SESSION['id'])) {
 </head>
 
 <body>
-  <header>
-    <h1 class="headline"><a href="../index.php">筋トレメモ</a>
-    </h1>
-    <ul class="nav-list">
-      <li class="nav-list-item">
-        <a href=" ../mypage.php">マイページ</a>
-      </li>
-      <li class="nav-list-item">
-        <a href="../logout.php">ログアウト</a>
-      </li>
-    </ul>
+  <header id="header">
+    <div class="wrapper">
+      <p class="logo"><a href="../index.php">筋トレメモ</a></p>
+      <nav>
+        <ul>
+          <li><a href="post.php?id=<?php echo $id; ?>">メモする</a></li>
+          <li><a href="../mypage.php?id=<?php echo $id; ?>">マイページ</a></li>
+          <li><a href="../logout.php">ログアウト</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <div class="form-title">メモ</div>

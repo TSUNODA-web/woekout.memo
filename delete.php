@@ -17,14 +17,17 @@ if (!$id) {
 }
 
 $db = dbconnect();
-$stmt = $db->prepare('delete from posts where id=? and member_id=? limit 1');
-if (!$stmt) {
-  die($db->error);
-}
-$stmt->bind_param('ii', $memo_id, $id);
-$success = $stmt->execute();
-if (!$success) {
-  die($db->error);
+try {
+  $stmt = $db->prepare('delete from posts where id=:memo_id and member_id=:id limit 1');
+  if (!$stmt) {
+    die($db->error);
+  }
+  $stmt->bindValue(':memo_id', (int)$memo_id, PDO::PARAM_INT);
+  $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
+  $stmt->execute();
+} catch (PDOException $_e) {
+  $db->rollBack();
+  exit($e);
 }
 
 ?>
@@ -44,17 +47,19 @@ if (!$success) {
 </head>
 
 <body>
-  <header>
-    <h1><a href="">筋トレメモ</a></h1>
-    <ul class="nav-list">
-      <li class="nav-list-item">
-        <a href="mypage.php">マイページ</a></a>
-      </li>
-      <li class="nav-list-item">
-        <a href="logout.php">ログアウト</a>
-      </li>
-    </ul>
+  <header id="header">
+    <div class="wrapper">
+      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+      <nav>
+        <ul>
+          <li><a href="memo/post.php?id=<?php echo $member_id; ?>">メモする</a></li>
+          <li><a href="mypage.php?id=<?php echo ($member_id); ?>">マイページ</a></li>
+          <li><a href="logout.php">ログアウト</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
+
   <div class="content">
     <h1>削除しました</h1>
     <a href="index.php" class="button">戻る</a>

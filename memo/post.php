@@ -81,17 +81,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-  <header>
-    <h1 class="headline"><a href="../index.php?id=<?php echo h($id); ?>">筋トレメモ</a>
-    </h1>
-    <ul class="nav-list">
-      <li class="nav-list-item">
-        <a href="../mypage.php?id=<?php echo h($id); ?>">マイページ</a>
-      </li>
-      <li class="nav-list-item">
-        <a href="../logout.php">ログアウト</a>
-      </li>
-    </ul>
+  <header id="header">
+    <div class="wrapper">
+      <p class="logo"><a href="../index.php">筋トレメモ</a></p>
+      <nav>
+        <ul>
+          <li><a href="post.php?id=<?php echo $id; ?>">メモする</a></li>
+          <li><a href="../mypage.php?id=<?php echo $id; ?>">マイページ</a></li>
+          <li><a href="../logout.php">ログアウト</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
   <p class="form-title">メモ</p>
   <div class="form-content">

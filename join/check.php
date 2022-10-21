@@ -45,9 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-  <header>
-    <h1><a href="">筋トレメモ</a></h1>
+  <header id="header">
+    <div class="wrapper">
+      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+    </div>
   </header>
+
   <div class="form-title">会員登録フォーム</div>
   <div class="form-content">
     <form action="" method="post">
