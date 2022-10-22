@@ -31,7 +31,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -44,35 +43,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>会員登録</title>
 </head>
 
-<body>
+<body id="page1">
   <header id="header">
     <div class="wrapper">
       <p class="logo"><a href="index.php">筋トレメモ</a></p>
     </div>
   </header>
-
-  <div class="form-title">会員登録フォーム</div>
-  <div class="form-content">
-    <form action="" method="post">
-      <div class="form-list">
-        <label>お名前</label>
-        <p class="check-list"><?php echo h($form['name']); ?></p>
+  <main>
+    <section id="content1">
+      <div class="wrapper">
+        <div class="form-title">会員登録フォーム</div>
+        <form action="" method="post">
+          <div class="form-list">
+            <label>お名前</label>
+            <p class="check-list"><?php echo h($form['name']); ?></p>
+          </div>
+          <div class="form-list">
+            <label>メールアドレス</label>
+            <p class="check-list"><?php echo h($form['email']); ?></p>
+          </div>
+          <div class="form-list">
+            <label>パスワード</label>
+            <p class="check-list">【表示されません】</p>
+          </div>
+          <div class="btn-area">
+            <a href="index.php?action=rewrite" class="button">書き直す</a>
+            <input type="submit" value="登録する" />
+          </div>
+        </form>
       </div>
-      <div class="form-list">
-        <label>メールアドレス</label>
-        <p class="check-list"><?php echo h($form['email']); ?></p>
-
-      </div>
-      <div class="form-list">
-        <label>パスワード</label>
-        <p class="check-list">【表示されません】</p>
-      </div>
-      <div class="btn-area">
-        <a href="index.php?action=rewrite" class="button">書き直す</a>
-        <input type="submit" value="登録する" />
-      </div>
-    </form>
-  </div>
+    </section>
+  </main>
 </body>
 
 </html>

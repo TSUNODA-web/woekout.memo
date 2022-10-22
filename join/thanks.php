@@ -10,7 +10,7 @@
   <title>会員登録</title>
 </head>
 
-<body>
+<body id="page1">
   <header id="header">
     <div class="wrapper">
       <p class="logo"><a href="index.php">筋トレメモ</a></p>

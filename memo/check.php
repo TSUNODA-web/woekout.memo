@@ -59,34 +59,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </nav>
     </div>
   </header>
-  <div class="form-title">メモ確認</div>
-  <div class="form-content">
-    <form action="" method="post">
-      <div class="form-list">
-        <label>体重</label>
-        <p class="check-list"><?php echo h($form['weight']); ?></p>
+  <main>
+    <section id="content1">
+      <div class="wrapper">
+        <div class="form-title">メモ確認</div>
+        <form action="" method="post">
+          <div class="form-list">
+            <label>体重</label>
+            <p class="check-list"><?php echo h($form['weight']); ?></p>
+          </div>
+          <div class="form-list">
+            <label>部位</label>
+            <p class="check-list"><?php echo h($form['part']); ?></p>
+          </div>
+          <div class="form-list">
+            <label>メモ</label>
+            <p class="check-list"><?php echo h($form['memo']); ?></p>
+          </div>
+          <div class="form-list">
+            <label>写真</label>
+            <p class="check-list"><img src="../picture/<?php echo h($form['image']); ?>" width="100" alt="" /></p>
+          </div>
+          <div class="btn-area">
+            <a href="post.php?action=rewrite" class="button">書き直す</a>
+            <input type="submit" value="メモする" />
+          </div>
+        </form>
       </div>
-      <div class="form-list">
-        <label>部位</label>
-        <p class="check-list"><?php echo h($form['part']); ?></p>
+    </section>
+  </main>
 
-      </div>
-      <div class="form-list">
-        <label>メモ</label>
-        <p class="check-list"><?php echo h($form['memo']); ?></p>
-      </div>
-      <div class="form-list">
-        <label>写真</label>
-        <img src="../picture/<?php echo h($form['image']); ?>" width="100" alt="" />
-
-      </div>
-
-      <div class="btn-area">
-        <a href="post.php?action=rewrite" class="button">書き直す</a>
-        <input type="submit" value="メモする" />
-      </div>
-    </form>
-  </div>
 
 </body>
 

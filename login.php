@@ -58,38 +58,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <title>login</title>
 </head>
 
-<body>
+<body id="page1">
   <header id="header">
     <div class="wrapper">
       <p class="logo"><a href="index.php">筋トレメモ</a></p>
     </div>
   </header>
-  <p class="form-title">ログインフォーム</p>
-  <div class="form-content">
-    <form action="" method="post">
-      <div class="form-list">
-        <label>メールアドレス</label>
-        <input name="email" type="email" value="<?php echo h($email); ?>">
-        <?php if (isset($error['login']) && $error['login'] === 'blank') : ?>
-          <p class="error">＊メールアドレスとパスワードをご記入ください</p>
-        <?php endif; ?>
-
+  <main>
+    <section id="content1">
+      <div class="wrapper">
+        <p class="form-title">ログインフォーム</p>
+        <form action="" method="post">
+          <div class="form-list">
+            <label>メールアドレス</label>
+            <input name="email" type="email" value="<?php echo h($email); ?>">
+          </div>
+          <?php if (isset($error['login']) && $error['login'] === 'blank') : ?>
+            <p class="error">＊メールアドレスとパスワードをご記入ください</p>
+          <?php endif; ?>
+          <div class="form-list">
+            <label>パスワード</label>
+            <input name="password" type="password" value="<?php echo h($password); ?>">
+            <?php if (isset($error['login']) && $error['login'] === 'faild') : ?>
+              <p class="error">＊メールアドレスまたはパスワードが一致しません。</p>
+            <?php endif; ?>
+          </div>
+          <div class="btn-area">
+            <input type="submit" name="" value="ログイン">
+            <a href="join/index.php" class="button">会員登録はこちら</a>
+          </div>
+        </form>
       </div>
-      <div class="form-list">
-        <label>パスワード</label>
-        <input name="password" type="password" value="<?php echo h($password); ?>">
-        <?php if (isset($error['login']) && $error['login'] === 'faild') : ?>
-          <p class="error">＊メールアドレスまたはパスワードが一致しません。</p>
-        <?php endif; ?>
-      </div>
-      <div class="btn-area">
-        <a href="join/index.php" class="button">会員登録はこちら</a>
+    </section>
 
-        <input type="submit" name="" value="ログイン">
-      </div>
-    </form>
-  </div>
 
+  </main>
 </body>
 
 </html>

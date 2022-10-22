@@ -93,46 +93,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </nav>
     </div>
   </header>
-  <p class="form-title">メモ</p>
-  <div class="form-content">
-    <form enctype="multipart/form-data" action="" method="post">
-      <div class="form-list">
-        <label>体重</label>
-        <input name="weight" type="number" max="100" min="0" step="0.1" value="<?php echo h($form['weight']); ?>">
-      </div>
-      <?php if (isset($error['weight']) && $error['weight'] === 'blank') :  ?>
-        <p class="error">＊選択してください</p>
-      <?php endif; ?>
-      <div class="form-list">
-        <label>部位</label>
-        <input name="part" type="text" value="<?php echo h($form['part']); ?>">
-      </div>
-      <?php if (isset($error['part']) && $error['part'] === 'blank') :  ?>
-        <p class="error">＊選択してください</p>
-      <?php endif; ?>
-      <div class="form-list">
-        <label>メモ</label>
-        <textarea name="memo" cols="50" rows="5"><?php echo h($form['memo']); ?></textarea>
-      </div>
-      <?php if (isset($error['memo']) && $error['memo'] === 'blank') : ?>
-        <p class="error">＊入力してください</p>
-      <?php endif; ?>
-      <div class="form-list">
-        <label>写真</label>
-        <input type="file" name="image" size="35">
-      </div>
-      <?php if (isset($error['image']) && $error['image'] === 'type') : ?>
-        <p class="error">＊写真は「.png」または「.jpg」の画像を指定してください</p>
-      <?php endif; ?>
-      <div>
-        <input type="hidden" name="member_id" value="<?php echo $id; ?>">
-      </div>
+  <main>
+    <section id="content1">
+      <div class="wrapper">
+        <p class="form-title">メモ</p>
+        <form enctype="multipart/form-data" action="" method="post">
+          <div class="form-list">
+            <label>体重</label>
+            <input name="weight" type="number" max="100" min="0" step="0.1" value="<?php echo h($form['weight']); ?>">
+          </div>
+          <?php if (isset($error['weight']) && $error['weight'] === 'blank') :  ?>
+            <p class="error">＊選択してください</p>
+          <?php endif; ?>
+          <div class="form-list">
+            <label>部位</label>
+            <input name="part" type="text" value="<?php echo h($form['part']); ?>">
+          </div>
+          <?php if (isset($error['part']) && $error['part'] === 'blank') :  ?>
+            <p class="error">＊選択してください</p>
+          <?php endif; ?>
+          <div class="form-list">
+            <label>メモ</label>
+            <textarea name="memo" placeholder="150字まで" maxlength="150"><?php echo h($form['memo']); ?></textarea>
+          </div>
+          <?php if (isset($error['memo']) && $error['memo'] === 'blank') : ?>
+            <p class="error">＊入力してください</p>
+          <?php endif; ?>
+          <div class="form-list">
+            <label>写真</label>
+            <input type="file" name="image" size="35">
+          </div>
+          <?php if (isset($error['image']) && $error['image'] === 'type') : ?>
+            <p class="error">＊写真は「.png」または「.jpg」の画像を指定してください</p>
+          <?php endif; ?>
+          <div>
+            <input type="hidden" name="member_id" value="<?php echo $id; ?>">
+          </div>
 
-      <div class="btn-area">
-        <input type="submit" name="" value="入力内容確認">
+          <div class="btn-area">
+            <input type="submit" name="" value="入力内容確認">
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
+    </section>
+  </main>
+
 
 
 </body>

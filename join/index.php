@@ -72,52 +72,54 @@ if (empty($error)) {
   <title>会員登録</title>
 </head>
 
-<body>
+<body id="page1">
   <header id="header">
     <div class="wrapper">
       <p class="logo"><a href="index.php">筋トレメモ</a></p>
     </div>
   </header>
-  <p class="form-title">会員登録フォーム</p>
-  <div class="form-content">
-    <form action="" method="post">
-      <div class="form-list">
-        <label>お名前</label>
-        <input name="name" type="text" value="<?php echo h($form['name']); ?>">
-        <?php if (isset($error['name']) && $error['name'] === 'blank') :  ?>
-          <p class="error">＊名前を入力してください</p>
-        <?php endif; ?>
-        <?php if (isset($error['name']) && $error['name'] === 'length') : ?>
-          <p class="error">＊名前は20文字以内で入力してください</p>
-        <?php endif; ?>
+  <main>
+    <section id="content">
+      <div class="wrapper">
+        <p class="form-title">会員登録フォーム</p>
+        <form action="" method="post">
+          <div class="form-list">
+            <label>お名前</label>
+            <input name="name" type="text" value="<?php echo h($form['name']); ?>">
+          </div>
+          <?php if (isset($error['name']) && $error['name'] === 'blank') :  ?>
+            <p class="error">＊名前を入力してください</p>
+          <?php endif; ?>
+          <?php if (isset($error['name']) && $error['name'] === 'length') : ?>
+            <p class="error">＊名前は20文字以内で入力してください</p>
+          <?php endif; ?>
+          <div class="form-list">
+            <label>メールアドレス</label>
+            <input name="email" type="email" value="<?php echo h($form['email']); ?>">
+          </div>
+          <?php if (isset($error['email']) && $error['email'] === 'blank') : ?>
+            <p class="error">＊メールアドレスを入力してください</p>
+          <?php endif; ?>
+          <?php if (isset($error['email']) && $error['email'] === 'duplicate') : ?>
+            <p class="error">＊指定されたメールアドレスはすでに登録されています</p>
+          <?php endif; ?>
+          <div class="form-list">
+            <label>パスワード</label>
+            <input name="password" type="password" value="<?php echo h($form['password']); ?>">
+          </div>
+          <?php if (isset($error['password']) && $error['password'] === 'blank') : ?>
+            <p class="error">＊パスワードを入力してください</p>
+          <?php endif; ?>
+          <?php if (isset($error['password']) && $error['password'] === 'length') : ?>
+            <p class="error">＊パスワードは8文字以上で入力してください</p>
+          <?php endif; ?>
+          <div class="btn-area">
+            <input type="submit" name="" value="入力内容確認">
+          </div>
+        </form>
       </div>
-      <div class="form-list">
-        <label>メールアドレス</label>
-        <input name="email" type="email" value="<?php echo h($form['email']); ?>">
-        <?php if (isset($error['email']) && $error['email'] === 'blank') : ?>
-          <p class="error">＊メールアドレスを入力してください</p>
-        <?php endif; ?>
-        <?php if (isset($error['email']) && $error['email'] === 'duplicate') : ?>
-          <p class="error">＊指定されたメールアドレスはすでに登録されています</p>
-        <?php endif; ?>
-      </div>
-      <div class="form-list">
-        <label>パスワード</label>
-        <input name="password" type="password" value="<?php echo h($form['password']); ?>">
-        <?php if (isset($error['password']) && $error['password'] === 'blank') : ?>
-          <p class="error">＊パスワードを入力してください</p>
-        <?php endif; ?>
-        <?php if (isset($error['password']) && $error['password'] === 'length') : ?>
-          <p class="error">＊パスワードは8文字以上で入力してください</p>
-        <?php endif; ?>
-
-        <div class="btn-area">
-          <input type="submit" name="" value="入力内容確認">
-        </div>
-      </div>
-  </div>
-  </form>
-  </div>
+    </section>
+  </main>
 </body>
 
 </html>
