@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $memos['memo'] = filter_input(INPUT_POST, 'memo');
   if ($memos['memo'] === '') {
     $err[] = 'メモを入力してください';
-  } elseif (20 < mb_strlen($memos['memo'])) {
+  } elseif (200 < mb_strlen($memos['memo'])) {
     $err[] = "メモは200文字以内で入力してください。";
   }
 

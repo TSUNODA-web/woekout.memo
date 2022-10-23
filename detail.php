@@ -72,45 +72,49 @@ if (isset($_POST["backbtn"])) {
       </nav>
     </div>
   </header>
-  <p class="form-title">詳細</p>
-  <div class="form-content">
-    <form action=" memos_update.php" method="post">
-      <div class="form-list">
-        <div class="detail-picture">
-          <?php if ($picture) : ?>
-            <div class="picture">
-              <img src="picture/<?php echo h($picture); ?>">
+  <main>
+    <section id="content1">
+      <div class="wrapper">
+        <p class="form-title">詳細</p>
+        <form action=" memos_update.php" method="post">
+          <div class="form-list">
+            <div class="detail-picture">
+              <?php if ($picture) : ?>
+                <div class="picture">
+                  <img src="picture/<?php echo h($picture); ?>">
+                </div>
+              <?php else : ?>
+                <div class="picture">
+                  <img src="empty_image/20200501_noimage.jpg">
+                </div>
+              <?php endif; ?>
             </div>
-          <?php else : ?>
-            <div class="picture">
-              <img src="empty_image/20200501_noimage.jpg">
-            </div>
-          <?php endif; ?>
-        </div>
+          </div>
+          <div class="form-list">
+            <label>部位</label>
+            <input name="part" type="text" value="<?php echo h($part); ?>">
+          </div>
+          <div class="form-list">
+            <label>体重</label>
+            <input name="weight" type="text" value="<?php echo h($weight); ?>">
+          </div>
+          <div class="form-list">
+            <label>メモ</label>
+            <textarea name="memo" cols="50" rows="5"><?php echo h($memo) ?></textarea>
+          </div>
+          <div>
+            <input type="hidden" name="id" value="<?php echo h($id); ?>">
+          </div>
+          <div class="btn-area">
+            <input type="submit" name="" value="編集する">
+          </div>
+          <div class="btn-area">
+            <a href="delete.php?id=<?php echo h($id); ?>" class="button">削除する</a>
+          </div>
+        </form>
       </div>
-      <div class="form-list">
-        <label>部位</label>
-        <input name="part" type="text" value="<?php echo h($part); ?>">
-      </div>
-      <div class="form-list">
-        <label>体重</label>
-        <input name="weight" type="text" value="<?php echo h($weight); ?>">
-      </div>
-      <div class="form-list">
-        <label>メモ</label>
-        <textarea name="memo" cols="50" rows="5"><?php echo h($memo) ?></textarea>
-      </div>
-      <div>
-        <input type="hidden" name="id" value="<?php echo h($id); ?>">
-      </div>
-      <div class="btn-area">
-        <input type="submit" name="" value="編集する">
-      </div>
-      <div class="btn-area">
-        <a href="delete.php?id=<?php echo h($id); ?>" class="button">削除する</a>
-      </div>
-    </form>
-  </div>
+    </section>
+  </main>
 </body>
 
 </html>

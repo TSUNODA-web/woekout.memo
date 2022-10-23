@@ -79,10 +79,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <div class="form-list">
             <label>パスワード</label>
             <input name="password" type="password" value="<?php echo h($password); ?>">
-            <?php if (isset($error['login']) && $error['login'] === 'faild') : ?>
-              <p class="error">＊メールアドレスまたはパスワードが一致しません。</p>
-            <?php endif; ?>
           </div>
+          <?php if (isset($error['login']) && $error['login'] === 'faild') : ?>
+            <p class="error">＊メールアドレスまたはパスワードが一致しません。</p>
+          <?php endif; ?>
           <div class="btn-area">
             <input type="submit" name="" value="ログイン">
             <a href="join/index.php" class="button">会員登録はこちら</a>

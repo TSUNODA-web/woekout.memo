@@ -44,6 +44,19 @@ session_destroy();
 </head>
 
 <body>
+  <header id="header">
+    <div class="wrapper">
+      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+      <nav>
+        <ul>
+          <li><a href="memo/post.php?id=<?php echo $id; ?>">メモする</a></li>
+          <li><a href="mypage.php?id=<?php echo $id; ?>">マイページ</a></li>
+          <li><a href="logout.php">ログアウト</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
   <p class=" thanks">編集が完了しました<br>再度ログインしてください</p>
   <div class="content">
     <a href="login.php" class="button">ログイン</a>

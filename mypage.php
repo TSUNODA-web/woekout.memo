@@ -45,26 +45,31 @@ if (isset($_POST["backbtn"])) {
       </nav>
     </div>
   </header>
-  <p class="form-title">登録情報</p>
-  <div class="form-content">
-    <form action="members_update.php" method="post">
-      <div class="form-list">
-        <label>お名前</label>
-        <input name="name" type="text" value="<?php echo h($name); ?>">
+  <main>
+    <section id="content1">
+      <div class="wrapper">
+        <p class="form-title">登録情報</p>
+        <form action="members_update.php" method="post">
+          <div class="form-list">
+            <label>お名前</label>
+            <input name="name" type="text" value="<?php echo h($name); ?>">
+          </div>
+          <div class="form-list">
+            <label>メールアドレス</label>
+            <input name="email" type="email" value="<?php echo h($email); ?>">
+          </div>
+          <div>
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
+          </div>
+          <div class="btn-area">
+            <input type="submit" name="" value="更新する">
+          </div>
+        </form>
+        <button onclick="location.href='password.php?id=<?php echo ($id); ?>'">パスワードの変更はこちら</button>
       </div>
-      <div class="form-list">
-        <label>メールアドレス</label>
-        <input name="email" type="email" value="<?php echo h($email); ?>">
-      </div>
-      <div>
-        <input type="hidden" name="id" value="<?php echo $id; ?>">
-      </div>
-      <div class="btn-area">
-        <input type="submit" name="" value="更新する">
-      </div>
-    </form>
-    <button onclick="location.href='password.php?id=<?php echo ($id); ?>'">パスワードの変更はこちら</button>
-  </div>
+    </section>
+  </main>
+
 </body>
 
 </html>

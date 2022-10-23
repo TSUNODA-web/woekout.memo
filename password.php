@@ -74,60 +74,64 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-  <header>
-    <h1 class="headline"><a href="index.php?id=<?php echo h($id); ?>">筋トレメモ</a>
-    </h1>
-    <ul class="nav-list">
-      <li class="nav-list-item">
-        <a href="mypage.php?id=<?php echo h($id); ?>">マイページ</a>
-
-      </li>
-      <li class="nav-list-item">
-        <a href="logout.php">ログアウト</a>
-      </li>
-    </ul>
+  <header id="header">
+    <div class="wrapper">
+      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+      <nav>
+        <ul>
+          <li><a href="memo/post.php?id=<?php echo $id; ?>">メモする</a></li>
+          <li><a href="mypage.php?id=<?php echo $id; ?>">マイページ</a></li>
+          <li><a href="logout.php">ログアウト</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
-  <p class="form-title">パスワード変更</p>
-  <div class="form-content">
-    <form action="" method="post">
-      <div class="form-list">
-        <label>現在のパスワード</label>
-        <input name="password" type="password" value="">
-        <?php if (isset($error['password']) && $error['password'] === 'blank') : ?>
-          <p class="error">＊パスワードを入力してください</p>
-        <?php endif; ?>
-        <?php if (isset($error['password']) && $error['password'] === 'faild') : ?>
-          <p class="error">＊パスワードが一致しません</p>
-        <?php endif; ?>
+  <main>
+    <section id="content1">
+      <div class="wrapper">
+        <p class="form-title">パスワード変更</p>
+        <form action="" method="post">
+          <div class="form-list">
+            <label>現在のパスワード</label>
+            <input name="password" type="password" value="">
+          </div>
+          <?php if (isset($error['password']) && $error['password'] === 'blank') : ?>
+            <p class="error">＊パスワードを入力してください</p>
+          <?php endif; ?>
+          <?php if (isset($error['password']) && $error['password'] === 'faild') : ?>
+            <p class="error">＊パスワードが一致しません</p>
+          <?php endif; ?>
+          <div class="form-list">
+            <label>新しいパスワード</label>
+            <input name="new_password" type="password" value="">
+          </div>
+          <?php if (isset($error['new_password']) && $error['new_password'] === 'blank') : ?>
+            <p class="error">＊パスワードを入力してください</p>
+          <?php endif; ?>
+          <?php if (isset($error['new_password']) && $error['new_password'] === 'length') : ?>
+            <p class="error">＊パスワードは8文字以上で入力してください</p>
+          <?php endif; ?>
+          <div class="form-list">
+            <label>確認</label>
+            <input name="confirm_password" type="password" value="">
+          </div>
+          <?php if (isset($error['confirm_password']) && $error['confirm_password'] === 'blank') : ?>
+            <p class="error">＊パスワードを入力してください</p>
+          <?php endif; ?>
+          <?php if (isset($error['confirm_password']) && $error['confirm_password'] === 'faild') : ?>
+            <p class="error">＊パスワードが一致しません</p>
+          <?php endif; ?>
+          <div>
+            <input type="hidden" name="id" value="<?php echo $id; ?>">
+          </div>
+          <div class="btn-area">
+            <input type="submit" name="" value="変更する">
+          </div>
+        </form>
       </div>
-      <div class="form-list">
-        <label>新しいパスワード</label>
-        <input name="new_password" type="password" value="">
-        <?php if (isset($error['new_password']) && $error['new_password'] === 'blank') : ?>
-          <p class="error">＊パスワードを入力してください</p>
-        <?php endif; ?>
-        <?php if (isset($error['new_password']) && $error['new_password'] === 'length') : ?>
-          <p class="error">＊パスワードは8文字以上で入力してください</p>
-        <?php endif; ?>
-      </div>
-      <div class="form-list">
-        <label>確認</label>
-        <input name="confirm_password" type="password" value="">
-        <?php if (isset($error['confirm_password']) && $error['confirm_password'] === 'blank') : ?>
-          <p class="error">＊パスワードを入力してください</p>
-        <?php endif; ?>
-        <?php if (isset($error['confirm_password']) && $error['confirm_password'] === 'faild') : ?>
-          <p class="error">＊パスワードが一致しません</p>
-        <?php endif; ?>
-      </div>
-      <div>
-        <input type="hidden" name="id" value="<?php echo $id; ?>">
-      </div>
-      <div class="btn-area">
-        <input type="submit" name="" value="変更する">
-      </div>
-    </form>
-  </div>
+    </section>
+  </main>
+
 </body>
 
 </html>
