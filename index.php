@@ -24,8 +24,8 @@ try {
 //変数に何も入ってこなければ１を代入
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);
 $page = ($page ?: 1);
-$start = ($page - 1) * 8;
-$max_page = floor(($result['cnt'] + 1) / 8 + 1);
+$start = ($page - 1) * 6;
+$max_page = floor(($result['cnt'] + 1) / 6 + 1);
 
 
 if ($page > $max_page) {
@@ -62,47 +62,48 @@ if ($page > $max_page) {
   </header>
   <?php
   $db = dbconnect();
-  $stmt = $db->prepare('select p.id, p.member_id, p.created, p.part, p.picture from posts p where p.member_id=:member_id order by p.id desc limit :start,8');
+  $stmt = $db->prepare('select p.id, p.member_id, p.created, p.part, p.picture from posts p where p.member_id=:member_id order by p.id desc limit :start,6');
   $stmt->bindValue(':member_id', (int)$member_id, PDO::PARAM_INT);
   $stmt->bindValue(':start', (int)$start, PDO::PARAM_INT);
   $stmt->execute();
   $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   ?>
 
-  <?php foreach ($result as $memo) { ?>
-    <main>
-      <section id="content1">
-        <div class="wrapper">
-          <div id="cards">
-            <div class="card">
+  <main>
+    <section id="content2">
+      <div class="flex-container">
+        <?php foreach ($result as $memo) { ?>
+          <div class="wrapper">
+            <div class="img-wrapper">
               <?php if ($memo['picture']) : ?>
-                <div class="picture"><a href="detail.php?id=<?php echo $memo['id']; ?>"><img src="picture/<?php echo $memo['picture']; ?>"></a>
+                <a href="detail.php?id=<?php echo $memo['id']; ?>"><img src="picture/<?php echo $memo['picture']; ?>">
                 <?php else : ?>
-                  <div class="picture"><a href="detail.php?id=<?php echo $memo['id']; ?>"><img src="empty_image/20200501_noimage.jpg"></a>
+                  <div class="img-wrapper">
+                    <a href="detail.php?id=<?php echo $memo['id']; ?>"><img src="empty_image/20200501_noimage.jpg"></a>
                   </div>
                 <?php endif; ?>
-                <div class="description">
-                  <p>[部位]<?php echo $memo['part']; ?></p>
-                  <br>
-                  <p class="day">[投稿日]<?php echo $memo['created']; ?></p>
-                </div>
-                </div>
             </div>
-          </div>
+            <div class="content-wrapper">
+              <h3 class="heading">[部位]<?php echo $memo['part']; ?></h3>
+              <p class="text">投稿日]<?php echo $memo['created']; ?></p>
+            </div>
 
+          </div>
+        <?php } ?>
+      </div>
+
+      <div class="btn-area">
+        <div class="pagination">
+          <?php if ($page > 1) : ?>
+            <a href="index.php?page=<?php echo $page - 1; ?>"><?php echo $page - 1; ?>ページ目へ</a> |
+          <?php endif ?>
+          <?php if ($page < $max_page) : ?>
+            <a href="index.php?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目へ</a>
+          <?php endif ?>
         </div>
-      </section>
-    </main>
-  <?php } ?>
-  <div class="btn-area">
-    <div class="pagination">
-      <?php if ($page > 1) : ?>
-        <a href="index.php?page=<?php echo $page - 1; ?>"><?php echo $page - 1; ?>ページ目へ</a> |
-      <?php endif ?>
-      <?php if ($page < $max_page) : ?>
-        <a href="index.php?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目へ</a>
-      <?php endif ?>
-    </div>
+
+    </section>
+  </main>
 
 
 
