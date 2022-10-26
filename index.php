@@ -53,8 +53,8 @@ if ($page > $max_page) {
       <p class="logo"><a href="index.php">筋トレメモ</a></p>
       <nav>
         <ul>
-          <li><a href="memo/post.php?id=<?php echo $member_id; ?>">メモする</a></li>
-          <li><a href="mypage.php?id=<?php echo ($member_id); ?>">マイページ</a></li>
+          <li><a href="memo/post.php?id=<?php echo h($member_id); ?>">メモする</a></li>
+          <li><a href="mypage.php?id=<?php echo h($member_id); ?>">マイページ</a></li>
           <li><a href="logout.php">ログアウト</a></li>
         </ul>
       </nav>
@@ -70,39 +70,38 @@ if ($page > $max_page) {
   ?>
 
   <main>
-    <section id="content2">
-      <div class="flex-container">
-        <?php foreach ($result as $memo) { ?>
-          <div class="wrapper">
-            <div class="img-wrapper">
-              <?php if ($memo['picture']) : ?>
-                <a href="detail.php?id=<?php echo $memo['id']; ?>"><img src="picture/<?php echo $memo['picture']; ?>">
-                <?php else : ?>
-                  <div class="img-wrapper">
-                    <a href="detail.php?id=<?php echo $memo['id']; ?>"><img src="empty_image/20200501_noimage.jpg"></a>
-                  </div>
-                <?php endif; ?>
-            </div>
-            <div class="content-wrapper">
-              <h3 class="heading">[部位]<?php echo $memo['part']; ?></h3>
-              <p class="text">投稿日]<?php echo $memo['created']; ?></p>
-            </div>
+    <div class="bl_media_container">
 
-          </div>
-        <?php } ?>
+      <?php foreach ($result as $memo) { ?>
+        <div class="bl_media_itemWrapper">
+          <?php if ($memo['picture']) : ?>
+            <div class="bl_media_item"><a href="detail.php?id=<?php echo $memo['id']; ?>">
+                <p class="img"><img src="picture/<?php echo h($memo['picture']); ?>" alt=""></p>
+              </a>
+            <?php else : ?>
+              <div class="bl_media_item"><a href="detail.php?id=<?php echo h($memo['id']); ?>">
+                  <p class="img"><img src="empty_image/20200501_noimage.jpg" alt=""></p>
+                </a>
+              <?php endif; ?>
+              </div>
+              <h3>[部位]<?php echo h($memo['part']); ?></h3>
+              <p>[投稿日]<?php echo h($memo['created']); ?></p>
+            </div>
+          <?php } ?>
+        </div>
+    </div>
+
+    <div class="btn-area">
+      <div class="pagination">
+        <?php if ($page > 1) : ?>
+          <a href="index.php?page=<?php echo $page - 1; ?>"><?php echo $page - 1; ?>ページ目へ</a>
+        <?php endif ?>
+        <?php if ($page < $max_page) : ?>
+          <a href="index.php?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目へ</a>
+        <?php endif ?>
       </div>
 
-      <div class="btn-area">
-        <div class="pagination">
-          <?php if ($page > 1) : ?>
-            <a href="index.php?page=<?php echo $page - 1; ?>"><?php echo $page - 1; ?>ページ目へ</a> |
-          <?php endif ?>
-          <?php if ($page < $max_page) : ?>
-            <a href="index.php?page=<?php echo $page + 1; ?>"><?php echo $page + 1; ?>ページ目へ</a>
-          <?php endif ?>
-        </div>
-
-    </section>
+      </section>
   </main>
 
 
