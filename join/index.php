@@ -84,7 +84,7 @@ if (empty($error)) {
         <p class="form-title">会員登録フォーム</p>
         <form action="" method="post">
           <div class="form-list">
-            <label>お名前</label>
+            <label>お名前　</label>
             <input name="name" type="text" value="<?php echo h($form['name']); ?>">
           </div>
           <?php if (isset($error['name']) && $error['name'] === 'blank') :  ?>

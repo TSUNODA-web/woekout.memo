@@ -257,9 +257,17 @@ img {
   }
 
   input {
-    width: 100%;
+    width: 80%;
+    float: none;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
+
+  .check-list {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
 
   img {
     max-width: 100%;
