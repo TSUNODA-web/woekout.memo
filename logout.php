@@ -6,5 +6,5 @@ session_destroy();
 
 
 
-header('Location: login.php');
+header('Location: top.php');
 exit();

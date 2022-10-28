@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['name'] = $result['name'];
         $_SESSION['email'] = $email;
 
-        header('Location: index.php');
+        header('Location: top.php');
         exit();
       } else {
         $error[('login')] = 'faild';
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body id="page1">
   <header id="header">
     <div class="wrapper">
-      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+      <p class="logo"><a href="top.php">筋トレメモ</a></p>
     </div>
   </header>
   <main>
@@ -85,7 +85,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <?php endif; ?>
           <div class="btn-area">
             <input type="submit" name="" value="ログイン">
-            <a href="join/index.php" class="button">会員登録はこちら</a>
           </div>
         </form>
       </div>

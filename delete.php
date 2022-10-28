@@ -4,7 +4,6 @@ require('library.php');
 
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $id = $_SESSION['id'];
-  $name = $_SESSION['name'];
 } else {
   header('Location: login.php');
   exit();
@@ -52,17 +51,17 @@ try {
       <p class="logo"><a href="index.php">筋トレメモ</a></p>
       <nav>
         <ul>
-          <li><a href="memo/post.php?id=<?php echo $member_id; ?>">メモする</a></li>
-          <li><a href="mypage.php?id=<?php echo ($member_id); ?>">マイページ</a></li>
+          <li><a href="memo/post.php?id=<?php echo h($id); ?>">メモする</a></li>
+          <li><a href="mypage.php?id=<?php echo h($id); ?>">マイページ</a></li>
           <li><a href="logout.php">ログアウト</a></li>
         </ul>
       </nav>
     </div>
   </header>
-
-  <div class="content">
-    <h1>削除しました</h1>
+  <p class=" thanks">削除しました</p>
+  <div class="btn-area">
     <a href="index.php" class="button">戻る</a>
+  </div>
 
   </div>
 </body>

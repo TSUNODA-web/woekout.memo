@@ -94,7 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </nav>
     </div>
   </header>
-  <div class="form-title">フォーム</div>
   <?php if (count($err) > 0) : ?>
     <?php foreach ($err as $e) : ?>
       <p class="thanks"><?php echo $e ?></p>
@@ -103,7 +102,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <form method="post" action="mypage.php?id=<?php echo $member['id']; ?>">
         <input type="hidden" name="name" value="<?php echo $member['name'] ?>">
         <input type="hidden" name="email" value="<?php echo $member['email'] ?>">
-        <input type="submit" name="backbtn" value="前のページへ戻る">
+        <div class="btn-area">
+          <input type="submit" name="backbtn" value="前のページへ戻る">
+        </div>
       </form>
     </div>
   <?php else : ?>
