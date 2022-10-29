@@ -71,6 +71,9 @@ if ($page > $max_page) {
   ?>
 
   <main>
+    <div class="caption">
+      <h1>過去の自分を越えよう</h1>
+    </div>
     <?php if (!$result) : ?>
       <div class="thanks">
         <h1>投稿がありません</h1>

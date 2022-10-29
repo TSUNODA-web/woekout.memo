@@ -37,6 +37,7 @@
 #header ul li {
   float: left;
   margin-right: 40px;
+  list-style-type: none
 }
 
 #header ul li:last-child {
@@ -206,7 +207,9 @@ input[type="file"] {
 }
 
 
-
+#menu-btn-check {
+  display: none;
+}
 
 /*ここから新しいやつ*/
 img {
@@ -220,7 +223,6 @@ img {
 .bl_media_container {
   display: flex;
   flex-wrap: wrap;
-  margin: calc(-30px / 2);
   padding: 30px;
 }
 
@@ -232,6 +234,11 @@ img {
 .bl_media_item {
   outline: 1px solid #000;
   font-size: 1.5vw;
+}
+
+.caption {
+  text-align: center;
+  margin-top: 20px;
 }
 
 /* タブレット　2カラム */
@@ -280,4 +287,124 @@ img {
     height: auto;
   }
 
+  /*ハンバーガーメニュ*/
+  .menu-btn {
+    position: fixed;
+    top: 6px;
+    right: 10px;
+    display: flex;
+    height: 60px;
+    width: 60px;
+    justify-content: center;
+    align-items: center;
+    z-index: 90;
+  }
+
+  .menu-btn span,
+  .menu-btn span:before,
+  .menu-btn span:after {
+    content: '';
+    display: block;
+    height: 3px;
+    width: 25px;
+    border-radius: 3px;
+    background-color: #ffffff;
+    position: absolute;
+  }
+
+  .menu-btn span:before {
+    bottom: 8px;
+  }
+
+  .menu-btn span:after {
+    top: 8px;
+  }
+
+  #menu-btn-check:checked~.menu-btn span {
+    background-color: rgba(255, 255, 255, 0);
+    /*メニューオープン時は真ん中の線を透明にする*/
+  }
+
+  #menu-btn-check:checked~.menu-btn span::before {
+    bottom: 0;
+    transform: rotate(45deg);
+  }
+
+  #menu-btn-check:checked~.menu-btn span::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+
+
+  .menu-content {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 100%;
+    z-index: 80;
+    background-color: #337079;
+    ;
+    transition: all 0.5s;
+    /*アニメーション設定*/
+    float: none;
+    text-align: center;
+    margin: 0;
+  }
+
+  .menu-content ul {
+    padding: 70px 10px 0;
+  }
+
+  .menu-content ul li {
+    list-style: none;
+  }
+
+  .menu-content ul li a {
+    display: block;
+    width: 100%;
+    font-size: 15px;
+    box-sizing: border-box;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 9px 15px 10px 0;
+    position: relative;
+  }
+
+  .menu-content ul li a::before {
+    content: "";
+    width: 7px;
+    height: 7px;
+    transform: rotate(45deg);
+    right: 11px;
+    top: 16px;
+  }
+
+  #menu-btn-check:checked~.menu-content {
+    left: 0;
+    /*メニューを画面内へ*/
+  }
+
+  #header {
+    height: 90px;
+  }
+
+  #header p {
+    margin-top: 35px;
+
+  }
+
+  #header ul {
+    float: none;
+
+  }
+
+
+  #header ul li {
+    float: none;
+    text-align: center;
+    margin: 0;
+  }
+
+  ;
 }

@@ -48,24 +48,31 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
   <header id="header">
     <div class="wrapper">
       <p class="logo"><a href="top.php">筋トレメモ</a></p>
-      <nav>
-        <ul>
-          <?php if (isset($_SESSION['id']) && isset($_SESSION['name'])) : ?>
-            <li><a href="memo/post.php">メモする</a></li>
-            <li><a href="index.php">投稿一覧</a></li>
-            <li><a href="mypage.php">登録情報</a></li>
-            <li><a href="logout.php">ログアウト</a></li>
-          <?php else : ?>
-            <li><a href="login.php">ログイン</a></li>
-            <li><a href="join/index.php">新規登録</a></li>
-          <?php endif; ?>
-        </ul>
-      </nav>
+      <div class="hamburger-menu">
+        <input type="checkbox" id="menu-btn-check">
+        <label for="menu-btn-check" class="menu-btn"><span></span></label>
+        <div class="menu-content">
+          <ul>
+            <?php if (isset($_SESSION['id']) && isset($_SESSION['name'])) : ?>
+              <li><a href="memo/post.php">メモする</a></li>
+              <li><a href="index.php">投稿一覧</a></li>
+              <li><a href="mypage.php">登録情報</a></li>
+              <li><a href="logout.php">ログアウト</a></li>
+            <?php else : ?>
+              <li><a href="login.php">ログイン</a></li>
+              <li><a href="join/index.php">新規登録</a></li>
+            <?php endif; ?>
+          </ul>
+        </div>
+
+      </div>
     </div>
   </header>
   <main>
+    <div class="caption">
+      <h1>みんなのメモを見て参考にしよう</h1>
+    </div>
     <div class="bl_media_container">
-
       <?php foreach ($result as $memo) { ?>
         <div class="bl_media_itemWrapper">
           <?php if ($memo['picture']) : ?>

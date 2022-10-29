@@ -1,11 +1,12 @@
 <?php
 session_start();
+
 //submitボタン以外からアクセスしてきたら、ログインページへ飛ばす。
-if (!isset($_POST["submit"])) {
+if (!isset($_SESSION["form"])) {
   header('Location: ../login.php');
   exit();
 }
-
+unset($_SESSION['form']);
 
 ?>
 
