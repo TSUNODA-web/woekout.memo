@@ -7,8 +7,14 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   header('Location: login.php');
   exit();
 }
-$memos = array();
 
+if (!isset($_POST["post"])) {
+  header('Location: login.php');
+  exit();
+}
+
+//POSTで送信してきた値を代入するため、初期化。
+$memos = array();
 //サニタイズ
 if (!empty($_POST)) {
   foreach ($_POST as $key => $value) {
@@ -75,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   <header id="header">
     <div class="wrapper">
-      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+      <p class="logo"><a href="top.php">筋トレメモ</a></p>
       <nav>
         <ul>
           <li><a href="memo/post.php?id=<?php echo $member_id; ?>">メモする</a></li>

@@ -1,11 +1,11 @@
 <?php
 session_start();
-if (isset($_SESSION['id'])) {
-  $id = $_SESSION['id'];
-} else {
+//submitボタン以外からアクセスしてきたら、ログインページへ飛ばす。
+if (!isset($_POST["submit"])) {
   header('Location: ../login.php');
   exit();
 }
+
 
 ?>
 
@@ -24,12 +24,13 @@ if (isset($_SESSION['id'])) {
 <body>
   <header id="header">
     <div class="wrapper">
-      <p class="logo"><a href="../index.php">筋トレメモ</a></p>
+      <p class="logo"><a href="../top.php">筋トレメモ</a></p>
       <nav>
         <ul>
-          <li><a href="post.php?id=<?php echo $id; ?>">メモする</a></li>
-          <li><a href="../mypage.php?id=<?php echo $id; ?>">マイページ</a></li>
-          <li><a href="../logout.php">ログアウト</a></li>
+          <li><a href="post.php">メモする</a></li>
+          <li><a href="index.php">投稿一覧</a></li>
+          <li><a href="mypage.php">登録情報</a></li>
+          <li><a href="logout.php">ログアウト</a></li>
         </ul>
       </nav>
     </div>

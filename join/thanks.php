@@ -13,7 +13,7 @@
 <body id="page1">
   <header id="header">
     <div class="wrapper">
-      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+      <p class="logo"><a href="../top.php">筋トレメモ</a></p>
     </div>
   </header>
   <div class="form-title">会員登録フォーム</div>

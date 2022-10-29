@@ -6,6 +6,11 @@ if (!isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 
+if (!isset($_POST["update"])) {
+  header('Location: login.php');
+  exit();
+}
+
 
 $form = $_SESSION['form'];
 
@@ -46,7 +51,7 @@ session_destroy();
 <body>
   <header id="header">
     <div class="wrapper">
-      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+      <p class="logo"><a href="top.php">筋トレメモ</a></p>
       <nav>
         <ul>
           <li><a href="memo/post.php?id=<?php echo $id; ?>">メモする</a></li>

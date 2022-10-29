@@ -8,6 +8,10 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   header('Location: login.php');
   exit();
 }
+if (!isset($_POST["delete"])) {
+  header('Location: login.php');
+  exit();
+}
 
 $memo_id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 if (!$id) {
@@ -28,7 +32,6 @@ try {
   $db->rollBack();
   exit($e);
 }
-
 ?>
 
 
@@ -48,7 +51,7 @@ try {
 <body>
   <header id="header">
     <div class="wrapper">
-      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+      <p class="logo"><a href="top.php">筋トレメモ</a></p>
       <nav>
         <ul>
           <li><a href="memo/post.php?id=<?php echo h($id); ?>">メモする</a></li>

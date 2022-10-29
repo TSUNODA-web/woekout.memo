@@ -76,13 +76,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
   <header id="header">
     <div class="wrapper">
-      <p class="logo"><a href="index.php">筋トレメモ</a></p>
+      <p class="logo"><a href="top.php">筋トレメモ</a></p>
       <nav>
         <ul>
-          <li><a href="memo/post.php?id=<?php echo $id; ?>">メモする</a></li>
-          <li><a href="mypage.php?id=<?php echo $id; ?>">マイページ</a></li>
-          <li><a href="logout.php">ログアウト</a></li>
-        </ul>
+          <li><a href="memo/post.php">メモする</a></li>
+          <li><a href="index.php">投稿一覧</a></li>
+          <li><a href="mypage.php">登録情報</a></li>
+          <li><a href="logout.php">ログアウト</a></ </ul>
       </nav>
     </div>
   </header>
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="hidden" name="id" value="<?php echo $id; ?>">
           </div>
           <div class="btn-area">
-            <input type="submit" name="" value="変更する">
+            <input type="submit" name="update" value="変更する">
           </div>
         </form>
       </div>

@@ -71,8 +71,12 @@ if ($page > $max_page) {
   ?>
 
   <main>
+    <?php if (!$result) : ?>
+      <div class="thanks">
+        <h1>投稿がありません</h1>
+      </div>
+    <?php endif; ?>
     <div class="bl_media_container">
-
       <?php foreach ($result as $memo) { ?>
         <div class="bl_media_itemWrapper">
           <?php if ($memo['picture']) : ?>
