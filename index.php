@@ -44,22 +44,25 @@ if ($page > $max_page) {
   <link rel="stylesheet" href="reset.css" />
   <link rel="stylesheet" href="style.css" />
 
-  <title>一覧</title>
+  <title>筋トレメモ</title>
 </head>
 
 <body>
   <header id="header">
     <div class="wrapper">
       <p class="logo"><a href="top.php">筋トレメモ</a></p>
-      <nav>
-        <ul>
-          <li><a href="memo/post.php?id=<?php echo h($member_id); ?>">メモする</a></li>
-          <li><a href="index.php">投稿一覧</a></li>
-          <li><a href="mypage.php?id=<?php echo h($member_id); ?>">登録情報</a></li>
-          <li><a href="logout.php">ログアウト</a></li>
-        </ul>
-      </nav>
-    </div>
+      <div class="hamburger-menu">
+        <input type="checkbox" id="menu-btn-check">
+        <label for="menu-btn-check" class="menu-btn"><span></span></label>
+        <div class="menu-content">
+          <ul>
+            <li><a href="memo/post.php?id">メモする</a></li>
+            <li><a href="index.php">投稿一覧</a></li>
+            <li><a href="mypage.php">登録情報</a></li>
+            <li><a href="logout.php">ログアウト</a></li>
+          </ul>
+        </div>
+      </div>
   </header>
   <?php
   $db = dbconnect();
@@ -83,11 +86,11 @@ if ($page > $max_page) {
       <?php foreach ($result as $memo) { ?>
         <div class="bl_media_itemWrapper">
           <?php if ($memo['picture']) : ?>
-            <div class="bl_media_item"><a href="detail.php?id=<?php echo $memo['id']; ?>">
+            <div class="bl_media_item"><a href="edit.php?id=<?php echo $memo['id']; ?>">
                 <p class="img"><img src="picture/<?php echo h($memo['picture']); ?>" alt=""></p>
               </a>
             <?php else : ?>
-              <div class="bl_media_item"><a href="detail.php?id=<?php echo h($memo['id']); ?>">
+              <div class="bl_media_item"><a href="edit.php?id=<?php echo h($memo['id']); ?>">
                   <p class="img"><img src="empty_image/20200501_noimage.jpg" alt=""></p>
                 </a>
               <?php endif; ?>

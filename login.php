@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="reset.css" />
   <link rel="stylesheet" href="style.css" />
 
-  <title>login</title>
+  <title>筋トレメモ</title>
 </head>
 
 <body id="page1">

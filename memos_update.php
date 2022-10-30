@@ -82,13 +82,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <header id="header">
     <div class="wrapper">
       <p class="logo"><a href="top.php">筋トレメモ</a></p>
-      <nav>
-        <ul>
-          <li><a href="memo/post.php?id=<?php echo $member_id; ?>">メモする</a></li>
-          <li><a href="mypage.php?id=<?php echo $member_id; ?>">マイページ</a></li>
-          <li><a href="logout.php">ログアウト</a></li>
-        </ul>
-      </nav>
+      <div class="hamburger-menu">
+        <input type="checkbox" id="menu-btn-check">
+        <label for="menu-btn-check" class="menu-btn"><span></span></label>
+        <div class="menu-content">
+          <ul>
+            <li><a href="memo/post.php?id">メモする</a></li>
+            <li><a href="index.php">投稿一覧</a></li>
+            <li><a href="mypage.php">登録情報</a></li>
+            <li><a href="logout.php">ログアウト</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
   </header>
   <div class="form-title">フォーム</div>
