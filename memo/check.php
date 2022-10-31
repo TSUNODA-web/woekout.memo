@@ -82,7 +82,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           </div>
           <div class="form-list">
             <label>写真</label>
-            <p class="check-list"><img src="../picture/<?php echo h($form['image']); ?>" width="100" alt="" /></p>
+            <?php if ($form['image']) : ?>
+              <p class="check-list">
+                <img src="../picture/<?php echo h($form['image']); ?>" class="check" />
+              </p>
+            <?php else : ?>
+              <p class="check-list">画像なし</p>
+            <?php endif; ?>
+
           </div>
           <div class="btn-area">
             <a href="post.php?action=rewrite" class="button">書き直す</a>

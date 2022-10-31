@@ -218,6 +218,10 @@ img {
   height: 360px;
 }
 
+.check {
+  width: 48%;
+}
+
 /* ここからカードレイアウトのスタイリング */
 /* PC　3カラム */
 .bl_media_container {
