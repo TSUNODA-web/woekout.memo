@@ -2,19 +2,8 @@
 session_start();
 require('library.php');
 
-if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
-  $member_id = $_SESSION['id'];
-  $name = $_SESSION['name'];
-} else {
-  header('Location: login.php');
-  exit();
-}
 
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-if (!$id) {
-  header('Location: index.php');
-  exit();
-}
 
 
 
@@ -33,12 +22,6 @@ try {
   exit($e);
 }
 
-//確認ページから戻ってきた場合のデータの受け取り
-if (isset($_POST["backbtn"])) {
-  $part    = $_POST['part'];
-  $weight    = $_POST['weight'];
-  $memo    = $_POST['memo'];
-}
 
 ?>
 
@@ -109,14 +92,6 @@ if (isset($_POST["backbtn"])) {
           </div>
           <div>
             <input type="hidden" name="id" value="<?php echo h($id); ?>">
-          </div>
-          <div class="btn-area">
-            <input type="submit" name="post" value="編集する">
-          </div>
-        </form>
-        <form action="delete.php?id=<?php echo h($id); ?>" method="post">
-          <div class="btn-area">
-            <input type="submit" name="delete" value="削除する">
           </div>
         </form>
       </div>
