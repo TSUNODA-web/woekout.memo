@@ -67,6 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <main>
     <section id="content1">
       <div class="wrapper">
+        <p class="form-title">ログインフォーム</p>
         <form action="" method="post">
           <div class="form-list">
             <label>メールアドレス</label>
