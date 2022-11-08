@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $error['login'] = 'blank';
   } else {
     //ログインチェック
-    $db = dbconnect();
+    $db = dbConnect2();
     try {
       $stmt = $db->prepare('select id,name,password from members where email=:email');
       $stmt->bindValue(':email', $email, PDO::PARAM_STR);
