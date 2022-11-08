@@ -29,7 +29,7 @@ function dbconnect()
   return $dbh;
 }
 
-function dbConnect2()
+function dbconnect2()
 {
   $db = parse_url($_SERVER['CLEARDB_DATABASE_URL']);
   $db['dbname'] = ltrim($db['path'], '/');
