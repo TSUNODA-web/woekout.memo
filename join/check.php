@@ -10,7 +10,7 @@ if (isset($_SESSION['form'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $db = dbconnect();
+  $db = dbConnect2();
   $db->beginTransaction();
   try {
     $stmt = $db->prepare('insert into members (name,email,password) VALUES(?,?,?)');

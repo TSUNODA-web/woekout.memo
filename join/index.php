@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($form['email'] === '') {
     $error['email'] = 'blank';
   } else {
-    $db = dbconnect();
+    $db = dbconnect2();
     try {
       $stmt = $db->prepare('select count(*) as cnt from members where email=:email ');
       $stmt->bindValue(':email', $form['email'], PDO::PARAM_STR);
