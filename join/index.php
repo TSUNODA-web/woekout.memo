@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($form['email'] === '') {
     $error['email'] = 'blank';
   } else {
-    $db = dbconnect2();
+    $db = dbconnect();
     try {
       $stmt = $db->prepare('select count(*) as cnt from members where email=:email ');
       $stmt->bindValue(':email', $form['email'], PDO::PARAM_STR);
@@ -38,8 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error['email'] = 'duplicate';
       }
     } catch (PDOException $e) {
+      echo '不具合です' . $e->getMessage();
       $db->rollBack();
-      exit($e);
+      exit();
     }
   }
 }

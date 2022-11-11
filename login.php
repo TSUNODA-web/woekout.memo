@@ -36,8 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error[('login')] = 'faild';
       }
     } catch (PDOException $e) {
+      echo '不具合です' . $e->getMessage();
       $db->rollBack();
-      exit($e);
+      exit();
     }
   }
 }

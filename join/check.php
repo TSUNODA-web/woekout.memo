@@ -25,6 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     unset($_SESSION['form']);
     header('Location:thanks.php');
   } catch (PDOException $e) {
+    echo '不具合です' . $e->getMessage();
     $db->rollBack();
     exit($e);
   }

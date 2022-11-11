@@ -18,8 +18,9 @@ try {
   $stmt->execute();
   $result = $stmt->fetch();
 } catch (PDOException $_e) {
+  echo '不具合です' . $e->getMessage();
   $db->rollBack();
-  exit($e);
+  exit();
 }
 //変数に何も入ってこなければ１を代入
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_NUMBER_INT);

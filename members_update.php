@@ -50,8 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $err[] = "指定されたメールアドレスはすでに登録されています";
       }
     } catch (PDOException $e) {
+      echo '不具合です' . $e->getMessage();
       $db->rollBack();
-      exit($e);
+      exit();
     }
   }
 

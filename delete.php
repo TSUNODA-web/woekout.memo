@@ -29,8 +29,9 @@ try {
   $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);
   $stmt->execute();
 } catch (PDOException $_e) {
+  echo '不具合です' . $e->getMessage();
   $db->rollBack();
-  exit($e);
+  exit();
 }
 ?>
 

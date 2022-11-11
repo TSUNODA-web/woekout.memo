@@ -30,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmt->execute();
       $result = $stmt->fetch();
     } catch (PDOException $e) {
-      $db->rollBack();
-      exit($e);
+      echo '不具合です' . $e->getMessage();
+      exit();
     }
     if (!password_verify($form['password'], $result['password'])) {
       $error[('password')] = 'faild';

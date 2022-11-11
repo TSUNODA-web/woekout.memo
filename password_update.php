@@ -25,8 +25,9 @@ try {
   $stmt->execute();
   $db->commit();
 } catch (PDOException $e) {
+  echo '不具合です' . $e->getMessage();
   $db->rollBack();
-  exit($e);
+  exit();
 }
 $_SESSION = array();
 session_destroy();

@@ -29,8 +29,9 @@ try {
   $memo = $result['memo'];
   $picture = $result['picture'];
 } catch (PDOException $e) {
+  echo '不具合です' . $e->getMessage();
   $db->rollBack();
-  exit($e);
+  exit();
 }
 
 //確認ページから戻ってきた場合のデータの受け取り
