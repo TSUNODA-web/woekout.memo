@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt->bindValue('2', $form['email'], PDO::PARAM_STR);
     $stmt->bindValue('3', $password, PDO::PARAM_STR);
 
-    $stmt->execute();
+    $stmt->execute($form['name'], $form['email'], $password);
     $db->commit();
 
     unset($_SESSION['form']);
