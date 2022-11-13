@@ -41,6 +41,10 @@ function dbconnect2()
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
   );
-  $dbh = new PDO($dsn, $user, $password, $options);
+  try {
+    $dbh = new PDO($dsn, $user, $password, $options);
+  } catch (PDOException $e) {
+    echo '接続失敗' . $e->getMessage();
+  }
   return $dbh;
 }
