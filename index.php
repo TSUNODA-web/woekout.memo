@@ -10,7 +10,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 
-$db = dbconnect();
+$db = dbconnect2();
 //ログインしているユーザーのメモの件数を取得
 try {
   $stmt = $db->prepare('select count(*) as cnt from posts WHERE member_id =:member_id');
@@ -66,7 +66,7 @@ if ($page > $max_page) {
       </div>
   </header>
   <?php
-  $db = dbconnect();
+  $db = dbconnect2();
   $stmt = $db->prepare('select p.id, p.member_id, p.created, p.part, p.picture from posts p where p.member_id=:member_id order by p.id desc limit :start,6');
   $stmt->bindValue(':member_id', (int)$member_id, PDO::PARAM_INT);
   $stmt->bindValue(':start', (int)$start, PDO::PARAM_INT);

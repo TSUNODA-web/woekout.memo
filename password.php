@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if ($form['password'] === '') {
     $error['password'] = 'blank';
   } else {
-    $db = dbconnect();
+    $db = dbconnect2();
     try {
       $stmt = $db->prepare('select password from members where id=:id');
       $stmt->bindValue(':id', $id, PDO::PARAM_INT);

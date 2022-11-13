@@ -19,7 +19,7 @@ if (!$id) {
   exit();
 }
 
-$db = dbconnect();
+$db = dbconnect2();
 try {
   $stmt = $db->prepare('delete from posts where id=:memo_id and member_id=:id limit 1');
   if (!$stmt) {

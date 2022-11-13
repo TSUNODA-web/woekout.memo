@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   //アップデート処理
   if (count($err) === 0) {
-    $db = dbconnect();
+    $db = dbconnect2();
     $db->beginTransaction();
     try {
       $stmt = $db->prepare('update members SET name=:name,email=:email where id=:member_id;');

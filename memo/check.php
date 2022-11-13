@@ -10,7 +10,7 @@ if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   exit();
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $db = dbconnect();
+  $db = dbconnect2();
   $db->beginTransaction();
   try {
     $stmt = $db->prepare('insert into posts(member_id,weight,part,memo,picture) VALUES(?,?,?,?,?)');

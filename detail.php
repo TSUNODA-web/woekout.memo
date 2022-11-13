@@ -5,7 +5,7 @@ require('library.php');
 
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
-$db = dbconnect();
+$db = dbconnect2();
 try {
   $stmt = $db->prepare('select p.id, p.member_id, p.picture, p.weight, p.part, p.memo,m.id from posts p, members m where p.id=:id and m.id=p.member_id');
   $stmt->bindValue(':id', (int)$id, PDO::PARAM_INT);

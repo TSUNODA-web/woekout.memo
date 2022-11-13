@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   //アップデート処理
   if (count($err) === 0) {
-    $db = dbconnect();
+    $db = dbconnect2();
     $db->beginTransaction();
     try {
       $stmt = $db->prepare('update posts SET part=:part,weight=:weight,memo=:memo where id=:id;');

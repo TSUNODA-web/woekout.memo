@@ -14,7 +14,7 @@ if (!isset($_POST["update"])) {
 
 $form = $_SESSION['form'];
 
-$db = dbconnect();
+$db = dbconnect2();
 $db->beginTransaction();
 try {
   $stmt = $db->prepare('update members SET password=:password where id=:id;');
