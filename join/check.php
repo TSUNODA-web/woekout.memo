@@ -8,7 +8,7 @@ if (isset($_SESSION['form'])) {
   header('Location:index.php');
   exit();
 }
-
+var_dump($form);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect2();
   $db->beginTransaction();
