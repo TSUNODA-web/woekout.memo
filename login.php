@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $result = $stmt->fetch();
 
 
-      if (password_verify($password, $result['password'])) {
+      if ($password === $result['password']) {
         //成功
         var_dump($result);
         session_regenerate_id();
