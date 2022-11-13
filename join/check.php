@@ -13,8 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect2();
   $db->beginTransaction();
   try {
-    $stmt = $db->prepare('insert into members (name,email,password) VALUES(?,?,?)');
     $password = password_hash($form['password'], PASSWORD_DEFAULT);
+    $stmt = $db->prepare('insert into members (name,email,password) VALUES(?,?,?)');
     $stmt->bindValue('1', $form['name'], PDO::PARAM_STR);
     $stmt->bindValue('2', $form['email'], PDO::PARAM_STR);
     $stmt->bindValue('3', $password, PDO::PARAM_STR);
