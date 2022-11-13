@@ -3,7 +3,7 @@ session_start();
 
 require('library.php');
 
-$db = dbconnect();
+$db = dbconnect2();
 //メモの件数を取得
 try {
   $stmt = $db->prepare('select count(*) as cnt from posts');
