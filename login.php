@@ -16,10 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //ログインチェック
     $db = dbconnect2();
     try {
-      $stmt = $db->prepare('select * from members where email=:email');
-      $stmt->bindValue(':email', $email, PDO::PARAM_STR);
+      $stmt = $db->prepare('select * from members ');
+      /*$stmt->bindValue(':email', $email, PDO::PARAM_STR);*/
       $stmt->execute();
       $result = $stmt->fetch();
+      var_dump($result);
 
 
       if (password_verify($password, $result['password'])) {
