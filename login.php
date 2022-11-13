@@ -9,22 +9,21 @@ $password = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
   $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-  var_dump($email, $password);
   if ($email === '' || $password === '') {
     $error['login'] = 'blank';
   } else {
     //ログインチェック
     $db = dbconnect2();
     try {
-      $stmt = $db->prepare('select * from members ');
-      /*$stmt->bindValue(':email', $email, PDO::PARAM_STR);*/
+      $stmt = $db->prepare('select * from members where email=:email');
+      $stmt->bindValue(':email', $email, PDO::PARAM_STR);
       $stmt->execute();
       $result = $stmt->fetch();
-      var_dump($result);
 
 
       if (password_verify($password, $result['password'])) {
         //成功
+        var_dump($result);
         session_regenerate_id();
         $_SESSION['id'] = $result['id'];
         $_SESSION['name'] = $result['name'];
