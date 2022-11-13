@@ -19,8 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $form['name'] = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
   if ($form['name'] === '') {
     $error['name'] = 'blank';
-  } //elseif (20 < mb_strlen($form['name'])) {
-  //$error['name'] = 'length';
+  } elseif (20 < mb_strlen($form['name'])) {
+    $error['name'] = 'length';
+  }
 
 
   $form['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
@@ -42,21 +43,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       exit();
     }
   }
-}
 
-$form['password'] = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
-if ($form['password'] === '') {
-  $error['password'] = 'blank';
-} elseif (strlen($form['password']) < 8) {
-  $error['password'] = 'length';
-}
 
-if (empty($error)) {
-  $_SESSION['form'] = $form;
-  header('Location: check.php');
-  exit();
-}
+  $form['password'] = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+  if ($form['password'] === '') {
+    $error['password'] = 'blank';
+  } elseif (strlen($form['password']) < 8) {
+    $error['password'] = 'length';
+  }
 
+  if (empty($error)) {
+    $_SESSION['form'] = $form;
+    header('Location: check.php');
+    exit();
+  }
+}
 
 
 ?>
