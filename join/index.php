@@ -16,7 +16,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'rewrite' && isset($_SESSION['
 $error = [];
 /*フォームの内容をチェック*/
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $form['name'] = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+  $form['name'] = filter_input(INPUT_POST, 'name');
   if ($form['name'] === '') {
     $error['name'] = 'blank';
   } elseif (20 < mb_strlen($form['name'])) {
