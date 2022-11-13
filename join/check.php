@@ -10,7 +10,7 @@ if (isset($_SESSION['form'])) {
 }
 $password = password_hash($form['password'], PASSWORD_DEFAULT);
 
-var_dump($form);
+var_dump($password);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect2();
