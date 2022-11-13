@@ -16,12 +16,12 @@ if (isset($_GET['action']) && $_GET['action'] === 'rewrite' && isset($_SESSION['
 $error = [];
 /*フォームの内容をチェック*/
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  $form['name'] = filter_input(INPUT_POST, 'name');
+  $form['name'] = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_SPECIAL_CHARS);
   if ($form['name'] === '') {
     $error['name'] = 'blank';
-    //} elseif (20 < mb_strlen($form['name'])) {
-    //$error['name'] = 'length';
-  }
+  } //elseif (20 < mb_strlen($form['name'])) {
+  //$error['name'] = 'length';
+
 
   $form['email'] = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
   if ($form['email'] === '') {
