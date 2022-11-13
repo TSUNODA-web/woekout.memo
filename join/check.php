@@ -8,18 +8,20 @@ if (isset($_SESSION['form'])) {
   header('Location:index.php');
   exit();
 }
+$password = password_hash($form['password'], PASSWORD_DEFAULT);
+
 var_dump($form);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect2();
   $db->beginTransaction();
   try {
-    $password = password_hash($form['password'], PASSWORD_DEFAULT);
     $stmt = $db->prepare('insert into members (name,email,password) VALUES(?,?,?)');
     $stmt->bindValue('1', $form['name'], PDO::PARAM_STR);
     $stmt->bindValue('2', $form['email'], PDO::PARAM_STR);
     $stmt->bindValue('3', $password, PDO::PARAM_STR);
 
-    $stmt->execute($form['name'], $form['email'], $password);
+    $stmt->execute();
     $db->commit();
 
     unset($_SESSION['form']);
