@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('/Applications/MAMP/htdocs/workout.memo/library.php');
+require('../ibrary.php');
 
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $id = $_SESSION['id'];
