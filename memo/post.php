@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('../library.php');
+//require('./');
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $id = $_SESSION['id'];
 } else {
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-/*if ($image['name'] !== '') {
+if ($image['name'] !== '') {
   $filename = date('YmdHis') . '_' . $image['name'];
   if (!move_uploaded_file($image['tmp_name'], '../picture/' . $filename)) {
     die('失敗しました');
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $_SESSION['form']['image'] = $filename;
 } else {
   $_SESSION['form']['image'] = '';
-}*/
+}
 
 header('location: check.php');
 exit();
