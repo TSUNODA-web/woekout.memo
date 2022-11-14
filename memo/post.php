@@ -17,7 +17,8 @@ if (isset($_GET['action']) && $_GET['action'] === 'rewrite' && isset($id) && iss
     'memo' => ''
   ];
 }
-
+ini_set('display_errors', 1);
+ini_set('error_reporting', E_ALL);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
