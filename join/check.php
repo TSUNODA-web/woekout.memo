@@ -4,6 +4,10 @@ require('../library.php');
 
 if (isset($_SESSION['form'])) {
   $form = $_SESSION['form'];
+  //サニタイズ
+  foreach ($form as $key => $value) {
+    $form[$key] = h($value);
+  }
 } else {
   header('Location:index.php');
   exit();
@@ -16,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect2();
   $db->beginTransaction();
   try {
-    $stmt = $db->prepare('insert into members (name,email,password) VALUES(?,?,?)');
-    $stmt->bindValue('1', $form['name'], PDO::PARAM_STR);
-    $stmt->bindValue('2', $form['email'], PDO::PARAM_STR);
-    $stmt->bindValue('3', $password, PDO::PARAM_STR);
+    $stmt = $db->prepare('insert into members (name,email,password) VALUES(:name,:email,:password)');
+    $stmt->bindValue(':name', $form['name'], PDO::PARAM_STR);
+    $stmt->bindValue(':email', $form['email'], PDO::PARAM_STR);
+    $stmt->bindValue(':password', $password, PDO::PARAM_STR);
 
     $stmt->execute();
     $db->commit();

@@ -87,7 +87,7 @@ $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
               <?php endif; ?>
               </div>
               <P>[部位]<?php echo h($memo['part']); ?></P>
-              <p>[投稿日]<?php echo ($memo['created']); ?></p>
+              <p>[投稿日]<?php echo h($memo['created']); ?></p>
             </div>
           <?php } ?>
         </div>
