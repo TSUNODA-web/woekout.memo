@@ -15,15 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //ログインチェック
     $db = dbconnect2();
     try {
-      $stmt = $db->prepare('select * from members where email=:email');
+      $stmt = $db->prepare('select id,name,password from members where email=:email');
       $stmt->bindValue(':email', $email, PDO::PARAM_STR);
       $stmt->execute();
       $result = $stmt->fetch();
 
+      $stmt->execute();
+      $result = $stmt->fetch();
 
-      if ($password === $result['password']) {
+      if (password_verify($password, $result['password'])) {
         //成功
-        var_dump($result);
         session_regenerate_id();
         $_SESSION['id'] = $result['id'];
         $_SESSION['name'] = $result['name'];
