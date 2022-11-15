@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('./');
+require('../library.php');
 
 if (isset($_GET['action']) && $_GET['action'] === 'rewrite' && isset($_SESSION['form'])) {
   $form = $_SESSION['form'];
