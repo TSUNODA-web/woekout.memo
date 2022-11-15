@@ -1,8 +1,6 @@
 <?php
 session_start();
-require('./ibrary.php');
-require('../library.php');
-require('library.php');
+require('../../library.php');
 
 if (isset($_SESSION['id']) && isset($_SESSION['name'])) {
   $id = $_SESSION['id'];
