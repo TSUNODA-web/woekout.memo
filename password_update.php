@@ -1,12 +1,7 @@
 <?php
 session_start();
 require('library.php');
-if (!isset($_SESSION['id']) && isset($_SESSION['name'])) {
-  header('Location: login.php');
-  exit();
-}
-
-if (!isset($_POST["update"])) {
+if (!isset($_SESSION["form"])) {
   header('Location: login.php');
   exit();
 }
