@@ -13,13 +13,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $db = dbconnect2();
   $db->beginTransaction();
   try {
-    $stmt = $db->prepare('insert into posts(member_id,weight,part,memo,picture) VALUES(?,?,?,?,?)');
+    $stmt = $db->prepare('insert into posts(member_id,weight,part,memo,picture) VALUES(:member_id,:weight,:part,:memo,:image)');
 
-    $stmt->bindValue('1', (int)$form['member_id'], PDO::PARAM_INT);
-    $stmt->bindValue('2', (int)$form['weight'], PDO::PARAM_INT);
-    $stmt->bindValue('3', $form['part'], PDO::PARAM_STR);
-    $stmt->bindValue('4', $form['memo'], PDO::PARAM_STR);
-    $stmt->bindValue('5', $form['image'], PDO::PARAM_STR);
+    $stmt->bindValue(':member_id', (int)$form['member_id'], PDO::PARAM_INT);
+    $stmt->bindValue(':weight', (int)$form['weight'], PDO::PARAM_INT);
+    $stmt->bindValue(':part', $form['part'], PDO::PARAM_STR);
+    $stmt->bindValue(':memo', $form['memo'], PDO::PARAM_STR);
+    $stmt->bindValue(':image', $form['image'], PDO::PARAM_STR);
 
     $stmt->execute();
     $db->commit();
