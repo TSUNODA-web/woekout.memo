@@ -23,13 +23,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $stmt->execute();
     $db->commit();
+    header('Location:thanks.php');
   } catch (PDOException $_e) {
     echo '不具合です' . $e->getMessage();
     $db->rollBack();
     exit($e);
   }
-
-  header('Location:thanks.php');
 }
 ?>
 <!DOCTYPE html>
