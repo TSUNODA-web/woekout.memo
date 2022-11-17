@@ -40,6 +40,7 @@ function dbconnect2()
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
     PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true,
+    PDO::MYSQL_ATTR_INIT_COMMAND => "SET time_zone='+09:00'"
   );
   try {
     $dbh = new PDO($dsn, $user, $password, $options);
